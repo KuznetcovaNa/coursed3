@@ -1,0 +1,160 @@
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: repeat url('../img/polka_dot_background.png');
+}
+
+.main-positioner {
+    width: 86%;
+    margin: 0 auto;
+    height: 100%;
+    position: relative;
+}
+
+.block-help {
+    margin-top: 30px;
+    margin-left: 30px;
+
+}
+
+.help-docs {
+    text-decoration: none;
+    color: #000080;
+    margin-left: 160px;
+    font-size: 20px;
+}
+
+.help-theory-article {
+    display: none;
+}
+
+.help-theory-article.show {
+    display: block;
+    z-index: 10;
+    color: #000080;
+    position: absolute;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    top: 0;
+    left: 0;
+    margin: 0;
+    height: 100%;
+    border: 1px solid #000080;
+    border-radius: 10px;
+    background-color: #fff;
+    font-size: 20px;
+    text-align: center;
+}
+
+.block-workspace {
+    margin-top: 30px;
+    background-color: #fff;
+    height: 600px;
+}
+
+.block-workspace > div {
+    display: inline-block;
+    height: 100%;
+    border: 1px solid #000080;
+    width: 33%;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+.block-workspace:first-child {
+    width: 34%;
+}
+
+.editor-benchmark-data {
+    border-bottom: 1px solid #000080;
+    box-sizing: border-box;
+    height: 20%;
+}
+
+.editor-code-area {
+    box-sizing: border-box;
+    height: 80%;
+}
+
+.editor-benchmark-data .CodeMirror{
+    height: 100%;
+}
+
+.editor-code-area .CodeMirror   {
+    height: 100%;
+}
+
+.block-control {
+    margin-top: 30px;
+}
+
+.control-text-task {
+    display: inline-block;
+    min-width: 34%;
+    width: 50%;
+    background-color: #fff;
+    border: 1px solid #000080;
+    color: #000080;
+    min-height: 100px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.control-navigation {
+    position: relative;
+    display: inline-block;
+    float: right;
+}
+
+.control-btn-check.btn {
+    margin-left: 30px;
+}
+
+.btn {
+    margin: 0;
+    cursor: pointer;
+    display: inline-block;
+    padding: 12px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border: 1px solid #eea236;
+    outline: none;
+    min-width: 100px;
+    color: #fff;
+    text-transform: uppercase;
+    background-image: linear-gradient(to bottom, #FBC579, #fbb450);
+    border-radius: 15px;
+}
+
+.btn:hover {
+    background: #eea236;
+}
+
+.btn.not-active {
+    background-image: linear-gradient(to bottom, #FCDDB0, #FCDDB0);
+    cursor: auto;
+    border-color: #FCD192;
+}
+
+.navigation-btn-prev, .navigation-btn-next {
+    min-width: 200px;
+}
+
+.navigation-btn-next {
+    margin-right: 30px;
+}
+
+.navigation-number {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    color: #000080;
+    font-size: 20px;
+}
