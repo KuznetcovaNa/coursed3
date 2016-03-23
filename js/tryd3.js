@@ -10,13 +10,19 @@ svg.on('click', function () {
     events.push(d3.event);
     if (events.length > 5) events.shift();
     var circles = svg.selectAll('circle')
-        .data(events, function (e) { return e.timeStamp })
+        .data(events, function (e) {
+            return e.timeStamp
+        })
         .attr('fill', 'gray');
     circles
         .enter()
         .append('circle')
-        .attr('cx', function (d) { return d.x || d.pageX })
-        .attr('cy', function (d) { return d.y || d.pageY })
+        .attr('cx', function (d) {
+            return d.x || d.pageX
+        })
+        .attr('cy', function (d) {
+            return d.y || d.pageY
+        })
         .attr('fill', 'red')
         .attr('r', 10);
     circles
@@ -34,9 +40,14 @@ var chart_area =
 
 var RANDOM_MIN = 0, RANDOM_MAX = 100;
 // Функция генерации случайного целого числа в диапазоне [lo..up]
-function irand(lo, up) { return Math.floor(Math.random()*(up-lo+1)+lo); }
+function irand(lo, up) {
+    return Math.floor(Math.random() * (up - lo + 1) + lo);
+}
 // Массив случайных чисел
-var data = []; for (var i=0; i<10; i++) { data.push(irand(RANDOM_MIN, RANDOM_MAX)); }
+var data = [];
+for (var i = 0; i < 10; i++) {
+    data.push(irand(RANDOM_MIN, RANDOM_MAX));
+}
 
 
 // Берем предыдущую выборку элементов (хранящуюся в переменной chart_area)
@@ -55,7 +66,9 @@ chart_area
     .style('height', '20px')
     .style('margin', '2px 0px')
     // Задаем стиль width='<d>px', где d — значение элемента массива
-    .style('width', function(d,i) { return d + 'px'; } )
+    .style('width', function (d, i) {
+        return d + 'px';
+    })
 // Задаем строковое значение равным значению элемента массива
     .text(String)
     // Задаем класс выбранным элементам class='bar_area'
