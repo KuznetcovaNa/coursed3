@@ -31,6 +31,10 @@ body {
     display: none;
 }
 
+.help-theory-hide.btn {
+    margin-top: 40px;
+}
+
 .help-theory-article.show {
     display: block;
     z-index: 10;
@@ -133,7 +137,7 @@ body {
 }
 
 .workspace-result, .workspace-pattern {
-
+    color: #000080;
 }
 
 .block-control {
