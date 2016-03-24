@@ -127,13 +127,13 @@ body {
     padding-top: 8px;
     padding-bottom: 8px;
     box-sizing: border-box;
-    background-color: #FDFAFF;
+    background-color: #FFFCFA;
 }
 
 .editor-benchmark-data .CodeMirror.cm-s-3024-day div.CodeMirror-gutters,
 .editor-code-js .CodeMirror.cm-s-3024-day div.CodeMirror-gutters,
 .editor-code-html .CodeMirror.cm-s-3024-day div.CodeMirror-gutters {
-    background-color: #FDFAFF;
+    background-color: #FFFCFA;
 }
 
 .workspace-result, .workspace-pattern {
@@ -159,12 +159,12 @@ body {
     padding-top: 2px;
     vertical-align: middle;
     border: 1px solid #000080;
-    /*border: 1px solid #8e59b4;*/
     outline: none;
     min-width: 100px;
     color: #fff;
     height: 25px;
-    background-color: #c7b7ea;
+    background-color: #000080;
+    opacity: 0.5;
     border-radius: 15px;
 }
 
