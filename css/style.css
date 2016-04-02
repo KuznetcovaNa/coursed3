@@ -77,6 +77,17 @@ body {
     position: relative
 }
 
+.workspace-result > iframe{
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.workspace-pattern {
+    background: no-repeat url('../img/diagr1');
+    background-size: contain;
+}
+
 .icon {
     position: absolute;
     width: 18px;

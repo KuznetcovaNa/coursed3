@@ -4,6 +4,7 @@ function course_module() {
     var benchmark_data_editor;
     var code_area_js;
     var code_area_html;
+    var iframe_content;
 
     function make_editor(id, mode, theme, readonly, value, selection_pointer) {
         var editor_object = CodeMirror.fromTextArea(document.getElementById(id), {
@@ -43,6 +44,23 @@ function course_module() {
 
     }
 
+    function make_frame() {
+        var iframe = document.createElement('iframe');
+        iframe.src = "javascript:";
+        document.getElementsByClassName("workspace-result")[0].appendChild(iframe);
+        var doc = iframe.contentDocument || iframe.contentWindow.document;
+        return doc;
+    }
+
+    function write_html_into_frame(iframe, html) {
+        iframe.write(html);
+    }
+
+    function write_js_into_frame(iframe, src, js) {
+        iframe.body.write(html);
+    }
+
+
     function init() {
         benchmark_data_editor = make_editor("benchmark-data", "text/javascript", "3024-day", true, "var small_array = [1, 2, 3]", false);
         code_area_js = make_editor("js-area", "text/javascript", "3024-day", false, "//Располагайте здесь JavaScript-код", false);
@@ -60,6 +78,12 @@ function course_module() {
         code_area_html = make_editor("html-area", mixed_mode, "3024-day", true, '<!DOCTYPE html>\n<html>\n<head lang="en">\n    <meta charset="UTF-8">' +
         '\n    <title>coursed3</title>\n</head>\n<body>\n    <script src="js/d3.min.js"></script>\n</body>\n</html>', true);
         activate_show_help();
+        iframe_content = make_frame();
+        //write_html_into_frame(iframe_content, code_area_html.getValue());
+        //write_js_into_frame(iframe_content, "d3.min.js");
+        code_area_js.on("change", function(){
+            write_js_into_frame(iframe_content, "d3.min.js");
+        })
     }
 
     init();
