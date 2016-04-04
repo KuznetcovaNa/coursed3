@@ -5,6 +5,7 @@ function course_module() {
     var code_area_js;
     var code_area_html;
     var iframe_content;
+    var iframe;
 
     function make_editor(id, mode, theme, readonly, value, selection_pointer) {
         var editor_object = CodeMirror.fromTextArea(document.getElementById(id), {
@@ -46,7 +47,7 @@ function course_module() {
 
     function make_frame() {
         var iframe = document.createElement('iframe');
-        iframe.src = "javascript:";
+        iframe.src = "javascript:''";
         document.getElementsByClassName("workspace-result")[0].appendChild(iframe);
         var doc = iframe.contentDocument || iframe.contentWindow.document;
         return doc;
@@ -56,8 +57,16 @@ function course_module() {
         iframe.write(html);
     }
 
-    function write_js_into_frame(iframe, src, js) {
-        iframe.body.write(html);
+    function write_js_into_frame(iframe, js_code, id) {
+        var selector = "#"+id;
+        var script = iframe.querySelector(selector);
+        if (script == null){
+            script = document.createElement('script');
+            script.id = id;
+            script.type  = "text/javascript";
+        }
+        script.text  = js_code;
+        iframe.body.appendChild(script);
     }
 
 
@@ -75,14 +84,19 @@ function course_module() {
                     mode: "vbscript"
                 }]
         };
-        code_area_html = make_editor("html-area", mixed_mode, "3024-day", true, '<!DOCTYPE html>\n<html>\n<head lang="en">\n    <meta charset="UTF-8">' +
+        code_area_html = make_editor("html-area", mixed_mode, "3024-day", false, '<!DOCTYPE html>\n<html>\n<head lang="en">\n    <meta charset="UTF-8">' +
         '\n    <title>coursed3</title>\n</head>\n<body>\n    <script src="js/d3.min.js"></script>\n</body>\n</html>', true);
         activate_show_help();
-        iframe_content = make_frame();
+        iframe = document.querySelector(".workspace-result iframe");
+        iframe.src = "javascript: '" + code_area_html.getValue() + "'";
+        iframe_content = iframe.contentDocument || iframe.contentWindow.document;
         //write_html_into_frame(iframe_content, code_area_html.getValue());
-        //write_js_into_frame(iframe_content, "d3.min.js");
+        write_js_into_frame(iframe_content, "var small_array = [1, 2, 3]", "benchmark-script");
         code_area_js.on("change", function(){
-            write_js_into_frame(iframe_content, "d3.min.js");
+            //write_js_into_frame(iframe_content, code_area_js.getValue(),"user-script");
+        });
+        code_area_html.on("change", function(){
+            write_html_into_frame(iframe_content, code_area_html.getValue());
         })
     }
 
@@ -94,7 +108,11 @@ function course_module() {
         },
         check_task: function () {
             return check();
-        }
+        },
+        iframe: function(){
+            return iframe_content;
+        }(),
+        code_area_html: code_area_html
     };
 }
 
