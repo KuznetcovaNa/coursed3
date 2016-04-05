@@ -58,15 +58,6 @@ function course_module() {
     }
 
     function write_js_into_frame(iframe_id, iframe, js_code, id) {
-        //var selector = "#"+id;
-        //var script = iframe.querySelector(selector);
-        //if (script == null){
-        //    $("#"+iframe_id).contents().find('body').append($('<script id="'+ id +'">').html(js_code))
-        //} else {
-        //    script.remove();
-        //    $("#"+iframe_id).contents().find('body').append($('<script id="'+ id +'">').html(js_code))
-        //}
-
         var selector = "#"+id;
         var script = iframe.querySelector(selector);
         if (script == null){
@@ -75,6 +66,12 @@ function course_module() {
             script.text  = js_code;
             iframe.body.appendChild(script);
         } else {
+            var children = iframe.body.childNodes;
+            for (var i= 0; i<children.length; i++){
+                if (children[i].nodeName !== "SCRIPT"){
+                    children[i].remove();
+                }
+            }
             script.remove();
             script = document.createElement('script');
             script.id = id;
