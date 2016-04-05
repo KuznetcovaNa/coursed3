@@ -57,16 +57,30 @@ function course_module() {
         iframe.write(html);
     }
 
-    function write_js_into_frame(iframe, js_code, id) {
+    function write_js_into_frame(iframe_id, iframe, js_code, id) {
+        //var selector = "#"+id;
+        //var script = iframe.querySelector(selector);
+        //if (script == null){
+        //    $("#"+iframe_id).contents().find('body').append($('<script id="'+ id +'">').html(js_code))
+        //} else {
+        //    script.remove();
+        //    $("#"+iframe_id).contents().find('body').append($('<script id="'+ id +'">').html(js_code))
+        //}
+
         var selector = "#"+id;
         var script = iframe.querySelector(selector);
         if (script == null){
             script = document.createElement('script');
             script.id = id;
-            script.type  = "text/javascript";
+            script.text  = js_code;
+            iframe.body.appendChild(script);
+        } else {
+            script.remove();
+            script = document.createElement('script');
+            script.id = id;
+            script.text  = js_code;
+            iframe.body.appendChild(script);
         }
-        script.text  = js_code;
-        iframe.body.appendChild(script);
     }
 
 
@@ -84,20 +98,18 @@ function course_module() {
                     mode: "vbscript"
                 }]
         };
-        code_area_html = make_editor("html-area", mixed_mode, "3024-day", false, '<!DOCTYPE html>\n<html>\n<head lang="en">\n    <meta charset="UTF-8">' +
+        code_area_html = make_editor("html-area", mixed_mode, "3024-day", true, '<!DOCTYPE html>\n<html>\n<head lang="en">\n    <meta charset="UTF-8">' +
         '\n    <title>coursed3</title>\n</head>\n<body>\n    <script src="js/d3.min.js"></script>\n</body>\n</html>', true);
         activate_show_help();
         iframe = document.querySelector(".workspace-result iframe");
         iframe.src = "javascript: '" + code_area_html.getValue() + "'";
         iframe_content = iframe.contentDocument || iframe.contentWindow.document;
         //write_html_into_frame(iframe_content, code_area_html.getValue());
-        write_js_into_frame(iframe_content, "var small_array = [1, 2, 3]", "benchmark-script");
+        write_js_into_frame("result-iframe", iframe_content, "var small_array = [1, 2, 3]", "benchmark-script");
+        write_js_into_frame("result-iframe", iframe_content, code_area_js.getValue(), "user-script");
         code_area_js.on("change", function(){
-            //write_js_into_frame(iframe_content, code_area_js.getValue(),"user-script");
+            write_js_into_frame("result-iframe", iframe_content, code_area_js.getValue(), "user-script");
         });
-        code_area_html.on("change", function(){
-            write_html_into_frame(iframe_content, code_area_html.getValue());
-        })
     }
 
     init();
