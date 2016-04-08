@@ -98,10 +98,17 @@ function course_module() {
         code_area_html = make_editor("html-area", mixed_mode, "3024-day", true, '<!DOCTYPE html>\n<html>\n<head lang="en">\n    <meta charset="UTF-8">' +
         '\n    <title>coursed3</title>\n</head>\n<body>\n    <script src="js/d3.min.js"></script>\n</body>\n</html>', true);
         activate_show_help();
-        iframe = document.querySelector(".workspace-result iframe");
+        //iframe = document.querySelector(".workspace-result iframe");
+        iframe = $(".workspace-result iframe")[0];
         iframe.src = "javascript: '" + code_area_html.getValue() + "'";
         iframe_content = iframe.contentDocument || iframe.contentWindow.document;
+        //iframe_content.open();
         //write_html_into_frame(iframe_content, code_area_html.getValue());
+        //iframe_content.close();
+        //setTimeout(function(){write_html_into_frame(iframe_content, code_area_html.getValue());
+        //    write_js_into_frame("result-iframe", iframe_content, "var small_array = [1, 2, 3]", "benchmark-script");
+        //    write_js_into_frame("result-iframe", iframe_content, code_area_js.getValue(), "user-script");
+        //}, 2000);
         write_js_into_frame("result-iframe", iframe_content, "var small_array = [1, 2, 3]", "benchmark-script");
         write_js_into_frame("result-iframe", iframe_content, code_area_js.getValue(), "user-script");
         code_area_js.on("change", function(){
