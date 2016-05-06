@@ -12,9 +12,13 @@ function course_module() {
             "\nvar links = [\n    {source: 'test_question_1', \n    target: 'test_question_2', \n    x: 150, \n    y: 200, \n    text: 'Да'}, \n    {source: 'test_question_1', \n    target: 'test_question_3', \n    x: 325, \n    y: 200, \n    text: 'Нет'}\n];",
             task_text: "Соедините вершины с вопросами ребрaми.",
             decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 500);var node = svg.selectAll('.node').data(nodes).enter().append('g').attr('class', 'node');node.append('svg:circle').attr('r', '80px').attr('fill', '#F7C092').attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });node.append('text').attr('x', function(d) { return d.x - 75; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });" +
-            "var link = svg.selectAll('.link').data(links).enter().append('g').attr('class', 'link');" +
-            "link.append('text').attr('x', function(d) { return d.x; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });",
+            "var link = svg.selectAll('.link').data(links).enter().append('g').attr('class', 'link').attr('x1', function(d) { return nodes[get_key(nodes, 'test_question_1')].x; })" +
+            ".attr('x2', function(d) { return nodes[get_key(nodes, 'test_question_2')].x; }).attr('y1', function(d) { return nodes[get_key(nodes, 'test_question_1')].y; })" +
+            ".attr('y2', function(d) { return nodes[get_key(nodes, 'test_question_2')].y; });" +
+            "link.append('text').attr('x', function(d) { return d.x; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });" +
+            "link.append('line').attr('class', 'line');",
             user_code: ""
+            //function(d) { return nodes[get_key(nodes, 'test_question_1')].x; }
         },
         3: {
             benchmark_data: "var task3;",
@@ -30,28 +34,6 @@ function course_module() {
         }
     };
 
-    function function1(){
-        //var svg = d3.select('body').
-        //    append('svg').
-        //    attr('width', 500).
-        //    attr('height', 500);
-        //var node = svg.selectAll('.node')
-        //    .data(nodes)
-        //    .enter().
-        //    append('g').
-        //    attr('class', 'node');
-        //node.append('svg:circle').
-        //    attr('r', '50px').
-        //    attr('fill', '#F7C092').
-        //    attr('cx', function(d) { return d.x; })
-        //    .('cy', function(d) { return d.y; });
-        //node.append('text')
-        //    .attr('x', function(d) { return d.x - 40; })
-        //    .attr('y', function(d) { return d.y; })
-        //    .text(function(d) { return d.text; });
-    }
-
-
     var variant = 1;
     var benchmark_data_editor;
     var code_area_js;
@@ -60,6 +42,15 @@ function course_module() {
     var iframe;
     var iframe_pattern;
     var iframe_pattern_content;
+
+    function get_key (obj, value) {
+        for (var key in obj) {
+            if (obj[key].name == value) {
+                return key;
+            }
+        }
+        return null;
+    }
 
     function make_editor(id, mode, theme, readonly, value, selection_pointer) {
         var editor_object = CodeMirror.fromTextArea(document.getElementById(id), {
@@ -116,6 +107,8 @@ function course_module() {
         $(".control-text-task")[0].innerHTML = variants_data[variant_number].task_text;
         write_js_into_frame("pattern-iframe", iframe_pattern_content, variants_data[variant_number].benchmark_data, "benchmark-script");
         write_js_into_frame("result-iframe", iframe_content, variants_data[variant_number].benchmark_data, "benchmark-script");
+        write_js_into_frame("pattern-iframe", iframe_pattern_content, get_key, "function-script");
+        write_js_into_frame("result-iframe", iframe_content, get_key, "function-script");
         if (benchmark_data_editor) {
             benchmark_data_editor.clearHistory();
             benchmark_data_editor.setValue(variants_data[variant_number].benchmark_data);
