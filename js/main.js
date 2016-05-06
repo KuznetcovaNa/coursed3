@@ -2,16 +2,18 @@ function course_module() {
 
     var variants_data = {
         1: {
-            benchmark_data: "var task1;",
-            task_text: "Нарисуйте кругляш",
-            decision_js_function: "var b = document.getElementsByTagName('body')[0];var node = document.createElement('LI');var textnode = document.createTextNode('task1');node.appendChild(textnode);b.appendChild(node);",
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            benchmark_data: "var nodes = [\n    {name: 'test_question_1', \n    x: 250, \n    y: 100, \n    text: 'Вы любите эвкалипт?'}\n];",
+            task_text: "Нарисуйте круг с вопросом теста внутри.",
+            decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 500);var node = svg.selectAll('.node').data(nodes).enter().append('g').attr('class', 'node');node.append('svg:circle').attr('r', '80px').attr('fill', '#F7C092').attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });node.append('text').attr('x', function(d) { return d.x - 75; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });",
             user_code: ""
         },
         2: {
-            benchmark_data: "var task2;",
-            task_text: "Кругляш с палками",
-            decision_js_function: "var b = document.getElementsByTagName('body')[0];var node = document.createElement('LI');var textnode = document.createTextNode('task2');node.appendChild(textnode);b.appendChild(node);",
+            benchmark_data: "var nodes = [\n    {name: 'test_question_1', \n    x: 250, \n    y: 100, \n    text: 'Вы любите эвкалипт?'}, \n    {name: 'test_question_2', \n    x: 400, \n    y: 300, \n    text: 'У Вас есть крылья?'}, \n    {name: 'test_question_3', \n    x: 100, \n    y: 300, \n    text: 'Вы спите по 20 часов?'}\n];" +
+            "\nvar links = [\n    {source: 'test_question_1', \n    target: 'test_question_2', \n    x: 150, \n    y: 200, \n    text: 'Да'}, \n    {source: 'test_question_1', \n    target: 'test_question_3', \n    x: 325, \n    y: 200, \n    text: 'Нет'}\n];",
+            task_text: "Соедините вершины с вопросами ребрaми.",
+            decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 500);var node = svg.selectAll('.node').data(nodes).enter().append('g').attr('class', 'node');node.append('svg:circle').attr('r', '80px').attr('fill', '#F7C092').attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });node.append('text').attr('x', function(d) { return d.x - 75; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });" +
+            "var link = svg.selectAll('.link').data(links).enter().append('g').attr('class', 'link');" +
+            "link.append('text').attr('x', function(d) { return d.x; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });",
             user_code: ""
         },
         3: {
@@ -28,6 +30,28 @@ function course_module() {
         }
     };
 
+    function function1(){
+        //var svg = d3.select('body').
+        //    append('svg').
+        //    attr('width', 500).
+        //    attr('height', 500);
+        //var node = svg.selectAll('.node')
+        //    .data(nodes)
+        //    .enter().
+        //    append('g').
+        //    attr('class', 'node');
+        //node.append('svg:circle').
+        //    attr('r', '50px').
+        //    attr('fill', '#F7C092').
+        //    attr('cx', function(d) { return d.x; })
+        //    .('cy', function(d) { return d.y; });
+        //node.append('text')
+        //    .attr('x', function(d) { return d.x - 40; })
+        //    .attr('y', function(d) { return d.y; })
+        //    .text(function(d) { return d.text; });
+    }
+
+
     var variant = 1;
     var benchmark_data_editor;
     var code_area_js;
@@ -36,69 +60,6 @@ function course_module() {
     var iframe;
     var iframe_pattern;
     var iframe_pattern_content;
-
-    //function decision1(){
-    //    var b = document.getElementsByTagName('body')[0];
-    //    var node = document.createElement("LI");
-    //    var textnode = document.createTextNode("task1");
-    //    node.appendChild(textnode);
-    //    b.appendChild(node);
-    //    var svg = d3.select('body').append('svg');
-    //
-    //    svg
-    //        .append('text')
-    //        .text('click somewhere')
-    //        .attr({'x': 25, 'y': 25});
-    //
-    //    var events = [];
-    //    svg.on('click', function () {
-    //        events.push(d3.event);
-    //        if (events.length > 5) events.shift();
-    //        var circles = svg.selectAll('circle')
-    //            .data(events, function (e) {
-    //                return e.timeStamp
-    //            })
-    //            .attr('fill', 'gray');
-    //        circles
-    //            .enter()
-    //            .append('circle')
-    //            .attr('cx', function (d) {
-    //                return d.x || d.pageX
-    //            })
-    //            .attr('cy', function (d) {
-    //                return d.y || d.pageY
-    //            })
-    //            .attr('fill', 'red')
-    //            .attr('r', 10);
-    //        circles
-    //            .exit()
-    //            .remove();
-    //    });
-    //}
-    //
-    //function decision2(){
-    //    var b = document.getElementsByTagName('body')[0];
-    //    var node = document.createElement("LI");
-    //    var textnode = document.createTextNode("task2");
-    //    node.appendChild(textnode);
-    //    b.appendChild(node);
-    //}
-    //
-    //function decision3(){
-    //    var b = document.getElementsByTagName('body')[0];
-    //    var node = document.createElement("LI");
-    //    var textnode = document.createTextNode("task3");
-    //    node.appendChild(textnode);
-    //    b.appendChild(node);
-    //}
-    //
-    //function decision4(){
-    //    var b = document.getElementsByTagName('body')[0];
-    //    var node = document.createElement("LI");
-    //    var textnode = document.createTextNode("task4");
-    //    node.appendChild(textnode);
-    //    b.appendChild(node);
-    //}
 
     function make_editor(id, mode, theme, readonly, value, selection_pointer) {
         var editor_object = CodeMirror.fromTextArea(document.getElementById(id), {
@@ -167,13 +128,9 @@ function course_module() {
         } else {
             code_area_js = make_editor("js-area", "text/javascript", "3024-day", false, "//Располагайте здесь JavaScript-код", false);
         }
-        //setTimeout(function(){
-        //    write_js_into_frame("pattern-iframe", iframe_pattern_content, make_task1+"\nmake_task1();", "complete-script");
-        //}, 100);
-        //setTimeout(function(){
-        //    write_js_into_frame("pattern-iframe", iframe_pattern_content, variants_data[variant_number].decision_js_function, "complete-script");
-        //}, 100);
-        write_js_into_frame("pattern-iframe", iframe_pattern_content, variants_data[variant_number].decision_js_function, "complete-script");
+        setTimeout(function(){
+            write_js_into_frame("pattern-iframe", iframe_pattern_content, variants_data[variant_number].decision_js_function, "complete-script");
+        }, 100);
     }
 
     function make_frame() {
