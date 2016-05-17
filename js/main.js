@@ -195,7 +195,7 @@ function course_module() {
         iframe_content = iframe.contentDocument || iframe.contentWindow.document;
         iframe_pattern = $(".workspace-pattern iframe")[0];
         iframe_pattern.src = "javascript: '" + code_area_html.getValue() + "'";
-        iframe_pattern_content = iframe_pattern.contentDocument || iframe_pattern.contentWindow.document;
+        iframe_pattern_content = iframe_pattern.contentDocument || iframe_pattern.contentWindow.document
         change_task(1);
         $(".navigation-btn-prev").click(function(){
             if (variant > 1) {
@@ -223,9 +223,9 @@ function course_module() {
             write_js_into_frame("result-iframe", iframe_content, code_area_js.getValue(), "user-script");
         });
         $(".control-check-btn").click(function(){
-            rasterizeHTML.drawDocument(iframe_content).then(function(result1) {
-                rasterizeHTML.drawDocument(iframe_pattern_content).then(function(result2) {
-                    check(result1.image.src, result2.image.src)
+            html2canvas(iframe_content.body).then(function(result1) {
+                html2canvas(iframe_pattern_content.body).then(function(result2) {
+                    check(result1.toDataURL(), result2.toDataURL())
                 });
             });
         })
