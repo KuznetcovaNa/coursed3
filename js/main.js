@@ -2,28 +2,28 @@ function course_module() {
 
     var variants_data = {
         1: {
-            benchmark_data: "var nodes = [\n    {name: 'test_question_1', \n    x: 250, \n    y: 100, \n    text: 'Вы любите эвкалипт?'}\n];",
+            benchmark_data: "var nodes = [{\n    name: 'test_question_1', \n    x: 250, \n    y: 100, \n    text: 'Вы любите эвкалипт?'\n}];",
             task_text: "Нарисуйте круг с вопросом теста внутри.",
             decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 500);var node = svg.selectAll('.node').data(nodes).enter().append('g').attr('class', 'node');node.append('svg:circle').attr('r', '80px').attr('fill', '#F7C092').attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });node.append('text').attr('x', function(d) { return d.x - 75; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });",
             user_code: ""
         },
         2: {
-            benchmark_data: "var nodes = [\n    {name: 'test_question_1', \n    x: 250, \n    y: 100, \n    text: 'Вы любите эвкалипт?'}, \n    {name: 'test_question_2', \n    x: 400, \n    y: 300, \n    text: 'У Вас есть крылья?'}, \n    {name: 'test_question_3', \n    x: 100, \n    y: 300, \n    text: 'Вы спите по 20 часов?'}\n];" +
-            "\nvar links = [\n    {source: 'test_question_1', \n    target: 'test_question_2', \n    x: 150, \n    y: 200, \n    text: 'Да'}, \n    {source: 'test_question_1', \n    target: 'test_question_3', \n    x: 325, \n    y: 200, \n    text: 'Нет'}\n];",
+            benchmark_data: "var nodes = [{\n    name: 'test_question_1', \n    x: 250, \n    y: 100, \n    text: 'Вы любите какао?'\n    }, \n    {\n    name: 'test_question_2', \n    x: 400, \n    y: 300, \n    text: 'У Вас есть мех?'\n    }, \n    {\n    name: 'test_question_3', \n    x: 100, \n    y: 300, \n    text: 'Вы спите по 20 часов?'\n}];" +
+            "\nvar links = [{\n    source: 'test_question_1', \n    target: 'test_question_2', \n    x: 150, \n    y: 200, \n    text: 'Да'\n    }, \n    {\n    source: 'test_question_1', \n    target: 'test_question_3', \n    x: 325, \n    y: 200, \n    text: 'Нет'\n}];",
             task_text: "Соедините вершины с вопросами ребрaми.",
-            decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 500);var node = svg.selectAll('.node').data(nodes).enter().append('g').attr('class', 'node');node.append('svg:circle').attr('r', '80px').attr('fill', '#F7C092').attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });node.append('text').attr('x', function(d) { return d.x - 75; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });" +
-            "var link = svg.selectAll('.link').data(links).enter().append('g').attr('class', 'link').attr('x1', function(d) { return nodes[get_key(nodes, 'test_question_1')].x; })" +
-            ".attr('x2', function(d) { return nodes[get_key(nodes, 'test_question_2')].x; }).attr('y1', function(d) { return nodes[get_key(nodes, 'test_question_1')].y; })" +
-            ".attr('y2', function(d) { return nodes[get_key(nodes, 'test_question_2')].y; });" +
+            decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 500);var node = svg.selectAll('.node').data(nodes).enter().append('g').attr('class', 'node');" +
+            "var link = svg.selectAll('.link').data(links).enter().append('g').attr('class', 'link');" +
             "link.append('text').attr('x', function(d) { return d.x; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });" +
-            "link.append('line').attr('class', 'line');",
+            "link.append('line').attr('class', 'line').attr('stroke', '#000080').style('stroke-width', 2).attr('x1', function(d) { return nodes[get_key(nodes, d.source)].x; }).attr('x2', function(d) { return nodes[get_key(nodes, d.target)].x;}).attr('y1', function(d) { return nodes[get_key(nodes, d.source)].y; }).attr('y2', function(d) { return nodes[get_key(nodes, d.target)].y; });" +
+            "node.append('svg:circle').attr('r', '80px').attr('fill', '#F7C092').attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });node.append('text').attr('x', function(d) { return d.x - 75; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });",
             user_code: ""
-            //function(d) { return nodes[get_key(nodes, 'test_question_1')].x; }
         },
         3: {
-            benchmark_data: "var task3;",
+            benchmark_data: "var nodes = [\n    {name: 'test_question_1', \n    x: 250, \n    y: 100, \n    text: 'Вы альпака!', \n    img: '../img/alpaka.png'}]",
             task_text: "доделать стили",
-            decision_js_function: "var b = document.getElementsByTagName('body')[0];var node = document.createElement('LI');var textnode = document.createTextNode('task3');node.appendChild(textnode);b.appendChild(node);",
+            decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 500);var node = svg.selectAll('.node').data(nodes).enter().append('g').attr('class', 'node');node.append('svg:circle').attr('r', '80px')." +
+            "attr('fill', '#F7C092').attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });" +
+            "node.append('text').attr('x', function(d) { return d.x - 75; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });",
             user_code: ""
         },
         4: {
@@ -42,6 +42,29 @@ function course_module() {
     var iframe;
     var iframe_pattern;
     var iframe_pattern_content;
+
+    function task1(){
+        var svg = d3.select('body')
+            .append('svg')
+            .attr('width', 500)
+            .attr('height', 500);
+
+        var node = svg.selectAll('.node')
+            .data(nodes)
+            .enter().append('g')
+            .attr('class', 'node');
+
+        node.append('svg:circle')
+            .attr('r', '80px')
+            .attr('fill', '#F7C092')
+            .attr('cx', function(d) { return d.x; })
+            .attr('cy', function(d) { return d.y; });
+
+        node.append('text')
+            .attr('x', function(d) { return d.x - 75; })
+            .attr('y', function(d) { return d.y; })
+            .text(function(d) { return d.text; });
+    }
 
     function get_key (obj, value) {
         for (var key in obj) {
@@ -82,8 +105,11 @@ function course_module() {
         });
     }
 
-    function check() {
-
+    function check(image1, image2) {
+        resemble(image1).compareTo(image2).onComplete(function(data){
+            console.log(data);
+            return data;
+        });
     }
 
     function decrease_task_number(variant_number){
@@ -124,18 +150,6 @@ function course_module() {
         setTimeout(function(){
             write_js_into_frame("pattern-iframe", iframe_pattern_content, variants_data[variant_number].decision_js_function, "complete-script");
         }, 100);
-    }
-
-    function make_frame() {
-        var iframe = document.createElement('iframe');
-        iframe.src = "javascript:''";
-        document.getElementsByClassName("workspace-result")[0].appendChild(iframe);
-        var doc = iframe.contentDocument || iframe.contentWindow.document;
-        return doc;
-    }
-
-    function write_html_into_frame(iframe, html) {
-        iframe.write(html);
     }
 
     function write_js_into_frame(iframe_id, iframe, js_code, id) {
@@ -208,15 +222,18 @@ function course_module() {
         code_area_js.on("change", function(){
             write_js_into_frame("result-iframe", iframe_content, code_area_js.getValue(), "user-script");
         });
+        $(".control-check-btn").click(function(){
+            rasterizeHTML.drawDocument(iframe_content).then(function(result1) {
+                rasterizeHTML.drawDocument(iframe_pattern_content).then(function(result2) {
+                    check(result1.image.src, result2.image.src)
+                });
+            });
+        })
     }
 
     init();
 
-    return {
-        check_task: function () {
-            return check();
-        }
-    };
+    return {};
 }
 
 var d3_course = course_module();
