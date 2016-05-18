@@ -115,18 +115,12 @@ body {
 .editor-benchmark-data {
     border-bottom: 1px solid #000080;
     box-sizing: border-box;
-    height: 15%;
+    height: 30%;
 }
 
 .editor-code-js {
     box-sizing: border-box;
-    height: 60%;
-}
-
-.editor-code-html {
-    box-sizing: border-box;
-    border-bottom: 1px solid #000080;
-    height: 25%;
+    height: 70%;
 }
 
 .editor-benchmark-data .CodeMirror.cm-s-3024-day,

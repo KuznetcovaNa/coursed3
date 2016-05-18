@@ -1,11 +1,21 @@
 function course_module() {
-
+    var nodes = [
+        {
+            name: 'test_question_1',
+            x: 250,
+            y: 100,
+            text: 'Вы альпака!',
+            img: '../img/alpaka.png'
+        }
+    ];
     var variants_data = {
         1: {
-            benchmark_data: "var nodes = [{\n    name: 'test_question_1', \n    x: 250, \n    y: 100, \n    text: 'Вы любите эвкалипт?'\n}];",
+            benchmark_data: "var nodes = [\n    {\n        name: 'test_question_1', \n        x: 250, \n        y: 100, \n        text: 'Вы любите эвкалипт?'\n    }\n];",
             task_text: "Нарисуйте круг с вопросом теста внутри.",
-            decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 500);var node = svg.selectAll('.node').data(nodes).enter().append('g').attr('class', 'node');node.append('svg:circle').attr('r', '80px').attr('fill', '#F7C092').attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });node.append('text').attr('x', function(d) { return d.x - 75; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });",
-            user_code: ""
+            decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 200);var node = svg.selectAll('.node').data(nodes).enter().append('g').attr('class', 'node');node.append('svg:circle').attr('r', '80px').attr('fill', '#F7C092').attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });node.append('text').attr('x', function(d) { return d.x - 75; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });",
+            //user_code: "//Располагайте здесь JavaScript-код",
+            user_code: 'var x = document.createElement("P");\nvar t = document.createTextNode("1");\nx.appendChild(t);\ndocument.body.appendChild(x);',
+            checked: false
         },
         2: {
             benchmark_data: "var nodes = [{\n    name: 'test_question_1', \n    x: 250, \n    y: 100, \n    text: 'Вы любите какао?'\n    }, \n    {\n    name: 'test_question_2', \n    x: 400, \n    y: 300, \n    text: 'У Вас есть мех?'\n    }, \n    {\n    name: 'test_question_3', \n    x: 100, \n    y: 300, \n    text: 'Вы спите по 20 часов?'\n}];" +
@@ -16,7 +26,9 @@ function course_module() {
             "link.append('text').attr('x', function(d) { return d.x; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });" +
             "link.append('line').attr('class', 'line').attr('stroke', '#000080').style('stroke-width', 2).attr('x1', function(d) { return nodes[get_key(nodes, d.source)].x; }).attr('x2', function(d) { return nodes[get_key(nodes, d.target)].x;}).attr('y1', function(d) { return nodes[get_key(nodes, d.source)].y; }).attr('y2', function(d) { return nodes[get_key(nodes, d.target)].y; });" +
             "node.append('svg:circle').attr('r', '80px').attr('fill', '#F7C092').attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });node.append('text').attr('x', function(d) { return d.x - 75; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });",
-            user_code: ""
+            //user_code: "//Располагайте здесь JavaScript-код",
+            user_code: 'var x = document.createElement("P");\nvar t = document.createTextNode("2");\nx.appendChild(t);\ndocument.body.appendChild(x);',
+            checked: false
         },
         3: {
             benchmark_data: "var nodes = [\n    {name: 'test_question_1', \n    x: 250, \n    y: 100, \n    text: 'Вы альпака!', \n    img: '../img/alpaka.png'}]",
@@ -24,20 +36,24 @@ function course_module() {
             decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 500);var node = svg.selectAll('.node').data(nodes).enter().append('g').attr('class', 'node');node.append('svg:circle').attr('r', '80px')." +
             "attr('fill', '#F7C092').attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });" +
             "node.append('text').attr('x', function(d) { return d.x - 75; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });",
-            user_code: ""
+            //user_code: "//Располагайте здесь JavaScript-код",
+            user_code: 'var x = document.createElement("P");\nvar t = document.createTextNode("3");\nx.appendChild(t);\ndocument.body.appendChild(x);',
+            checked: false
         },
         4: {
             benchmark_data: "var task4;",
             task_text: "что-то грандиозное",
             decision_js_function: "var b = document.getElementsByTagName('body')[0];var node = document.createElement('LI');var textnode = document.createTextNode('task4');node.appendChild(textnode);b.appendChild(node);",
-            user_code: ""
+            //user_code: "//Располагайте здесь JavaScript-код",
+            user_code: 'var x = document.createElement("P");\nvar t = document.createTextNode("4");\nx.appendChild(t);\ndocument.body.appendChild(x);',
+            checked: false
         }
     };
-
     var variant = 1;
     var benchmark_data_editor;
     var code_area_js;
-    var code_area_html;
+    var code_area_html = '<!DOCTYPE html>\n<html>\n<head lang="en">\n    <meta charset="UTF-8">' +
+        '\n    <title>coursed3</title>\n</head>\n<body>\n    <script src="js/d3.min.js"></script>\n</body>\n</html>';
     var iframe_content;
     var iframe;
     var iframe_pattern;
@@ -108,6 +124,7 @@ function course_module() {
     function check(image1, image2) {
         resemble(image1).compareTo(image2).onComplete(function(data){
             console.log(data);
+            $(".control-check-indicator").html((100-parseInt(data.misMatchPercentage))+"%");
             return data;
         });
     }
@@ -129,6 +146,8 @@ function course_module() {
     }
 
     function change_task(variant_number) {
+        console.log("change task");
+        console.log(variants_data[variant_number].user_code);
         $(".navigation-number")[0].innerHTML = variant_number + "/4";
         $(".control-text-task")[0].innerHTML = variants_data[variant_number].task_text;
         write_js_into_frame("pattern-iframe", iframe_pattern_content, variants_data[variant_number].benchmark_data, "benchmark-script");
@@ -143,11 +162,12 @@ function course_module() {
         }
         if (code_area_js){
             code_area_js.clearHistory();
-            code_area_js.setValue("//Располагайте здесь JavaScript-код");
+            code_area_js.setValue(variants_data[variant_number].user_code);
         } else {
-            code_area_js = make_editor("js-area", "text/javascript", "3024-day", false, "//Располагайте здесь JavaScript-код", false);
+            code_area_js = make_editor("js-area", "text/javascript", "3024-day", false, variants_data[variant_number].user_code, false);
         }
         setTimeout(function(){
+            write_js_into_frame("result_iframe", iframe_content, variants_data[variant_number].user_code, "user-script");
             write_js_into_frame("pattern-iframe", iframe_pattern_content, variants_data[variant_number].decision_js_function, "complete-script");
         }, 100);
     }
@@ -176,27 +196,21 @@ function course_module() {
     }
 
     function init() {
-        var mixed_mode = {
-            name: "htmlmixed",
-            scriptTypes: [{
-                matches: /\/x-handlebars-template|\/x-mustache/i,
-                mode: null
-            },
-                {
-                    matches: /(text|application)\/(x-)?vb(a|script)/i,
-                    mode: "vbscript"
-                }]
-        };
-        code_area_html = make_editor("html-area", mixed_mode, "3024-day", true, '<!DOCTYPE html>\n<html>\n<head lang="en">\n    <meta charset="UTF-8">' +
-        '\n    <title>coursed3</title>\n</head>\n<body>\n    <script src="js/d3.min.js"></script>\n</body>\n</html>', true);
         activate_show_help();
         iframe = $(".workspace-result iframe")[0];
-        iframe.src = "javascript: '" + code_area_html.getValue() + "'";
+        iframe.src = "javascript: '" + code_area_html + "'";
         iframe_content = iframe.contentDocument || iframe.contentWindow.document;
         iframe_pattern = $(".workspace-pattern iframe")[0];
-        iframe_pattern.src = "javascript: '" + code_area_html.getValue() + "'";
-        iframe_pattern_content = iframe_pattern.contentDocument || iframe_pattern.contentWindow.document
+        iframe_pattern.src = "javascript: '" + code_area_html + "'";
+        iframe_pattern_content = iframe_pattern.contentDocument || iframe_pattern.contentWindow.document;
         change_task(1);
+        code_area_js.on("focus", function(){
+            $(this).on("change", function(){
+                variants_data[variant].user_code = code_area_js.getValue();
+                console.log("focus changed");
+                console.log(variants_data[variant].user_code);
+            })
+        });
         $(".navigation-btn-prev").click(function(){
             if (variant > 1) {
                 variant = decrease_task_number(variant);
@@ -220,12 +234,13 @@ function course_module() {
             }
         });
         code_area_js.on("change", function(){
-            write_js_into_frame("result-iframe", iframe_content, code_area_js.getValue(), "user-script");
+            //write_js_into_frame("result-iframe", iframe_content, code_area_js.getValue(), "user-script");
         });
         $(".control-check-btn").click(function(){
+            //check("img/alpaka.png", "img/coala.jpg");
             html2canvas(iframe_content.body).then(function(result1) {
                 html2canvas(iframe_pattern_content.body).then(function(result2) {
-                    check(result1.toDataURL(), result2.toDataURL())
+                    check(result1.toDataURL(), result2.toDataURL());
                 });
             });
         })
