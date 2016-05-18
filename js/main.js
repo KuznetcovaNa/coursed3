@@ -1,13 +1,4 @@
 function course_module() {
-    var nodes = [
-        {
-            name: 'test_question_1',
-            x: 250,
-            y: 100,
-            text: 'Вы альпака!',
-            img: '../img/alpaka.png'
-        }
-    ];
     var variants_data = {
         1: {
             benchmark_data: "var nodes = [\n    {\n        name: 'test_question_1', \n        x: 250, \n        y: 100, \n        text: 'Вы любите эвкалипт?'\n    }\n];",
@@ -15,7 +6,8 @@ function course_module() {
             decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 200);var node = svg.selectAll('.node').data(nodes).enter().append('g').attr('class', 'node');node.append('svg:circle').attr('r', '80px').attr('fill', '#F7C092').attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });node.append('text').attr('x', function(d) { return d.x - 75; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });",
             //user_code: "//Располагайте здесь JavaScript-код",
             user_code: 'var x = document.createElement("P");\nvar t = document.createTextNode("1");\nx.appendChild(t);\ndocument.body.appendChild(x);',
-            checked: false
+            checked: {true_percentage: 0,
+                is_ok: false}
         },
         2: {
             benchmark_data: "var nodes = [{\n    name: 'test_question_1', \n    x: 250, \n    y: 100, \n    text: 'Вы любите какао?'\n    }, \n    {\n    name: 'test_question_2', \n    x: 400, \n    y: 300, \n    text: 'У Вас есть мех?'\n    }, \n    {\n    name: 'test_question_3', \n    x: 100, \n    y: 300, \n    text: 'Вы спите по 20 часов?'\n}];" +
@@ -28,7 +20,8 @@ function course_module() {
             "node.append('svg:circle').attr('r', '80px').attr('fill', '#F7C092').attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });node.append('text').attr('x', function(d) { return d.x - 75; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });",
             //user_code: "//Располагайте здесь JavaScript-код",
             user_code: 'var x = document.createElement("P");\nvar t = document.createTextNode("2");\nx.appendChild(t);\ndocument.body.appendChild(x);',
-            checked: false
+            checked: {true_percentage: 0,
+                is_ok: false}
         },
         3: {
             benchmark_data: "var nodes = [\n    {name: 'test_question_1', \n    x: 250, \n    y: 100, \n    text: 'Вы альпака!', \n    img: '../img/alpaka.png'}]",
@@ -38,7 +31,8 @@ function course_module() {
             "node.append('text').attr('x', function(d) { return d.x - 75; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });",
             //user_code: "//Располагайте здесь JavaScript-код",
             user_code: 'var x = document.createElement("P");\nvar t = document.createTextNode("3");\nx.appendChild(t);\ndocument.body.appendChild(x);',
-            checked: false
+            checked: {true_percentage: 0,
+                is_ok: false}
         },
         4: {
             benchmark_data: "var task4;",
@@ -46,7 +40,8 @@ function course_module() {
             decision_js_function: "var b = document.getElementsByTagName('body')[0];var node = document.createElement('LI');var textnode = document.createTextNode('task4');node.appendChild(textnode);b.appendChild(node);",
             //user_code: "//Располагайте здесь JavaScript-код",
             user_code: 'var x = document.createElement("P");\nvar t = document.createTextNode("4");\nx.appendChild(t);\ndocument.body.appendChild(x);',
-            checked: false
+            checked: {true_percentage: 0,
+                is_ok: false}
         }
     };
     var variant = 1;
@@ -123,8 +118,16 @@ function course_module() {
 
     function check(image1, image2) {
         resemble(image1).compareTo(image2).onComplete(function(data){
-            console.log(data);
-            $(".control-check-indicator").html((100-parseInt(data.misMatchPercentage))+"%");
+            var true_percentage = 100-data.misMatchPercentage;
+            if (true_percentage >=98) {
+                $(".control-check-indicator").html("ok: " + true_percentage + "%");
+                variants_data[variant].checked.is_ok = true;
+                variants_data[variant].checked.true_percentage = true_percentage;
+            } else {
+                $(".control-check-indicator").html("nope :(");
+                variants_data[variant].checked.is_ok = false;
+                variants_data[variant].checked.true_percentage = true_percentage;
+            }
             return data;
         });
     }
@@ -169,15 +172,10 @@ function course_module() {
             code_area_js = make_editor("js-area", "text/javascript", "3024-day", false, variants_data[variant_number].user_code, false);
         }
         setTimeout(function(){
-            clear_iframe_body(iframe_content);
-            write_js_into_frame(iframe_content, variants_data[variant_number].benchmark_data, "benchmark-script");
-            write_js_into_frame(iframe_content, get_key, "function-script");
             write_js_into_frame(iframe_content, variants_data[variant_number].user_code, "user-script");
-            clear_iframe_body(iframe_pattern_content);
-            write_js_into_frame(iframe_pattern_content, variants_data[variant_number].benchmark_data, "benchmark-script");
-            write_js_into_frame(iframe_pattern_content, get_key, "function-script");
             write_js_into_frame(iframe_pattern_content, variants_data[variant_number].decision_js_function, "complete-script");
         }, 100);
+        $(".control-check-indicator").html("???");
     }
 
     function clear_iframe_body(iframe){
