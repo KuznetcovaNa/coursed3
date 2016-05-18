@@ -146,39 +146,40 @@ function course_module() {
     }
 
     function change_task(variant_number) {
-        console.log("change task");
         $(".navigation-number")[0].innerHTML = variant_number + "/4";
         $(".control-text-task")[0].innerHTML = variants_data[variant_number].task_text;
-        write_js_into_frame("pattern-iframe", iframe_pattern_content, variants_data[variant_number].benchmark_data, "benchmark-script");
-        write_js_into_frame("result-iframe", iframe_content, variants_data[variant_number].benchmark_data, "benchmark-script");
-        write_js_into_frame("pattern-iframe", iframe_pattern_content, get_key, "function-script");
-        write_js_into_frame("result-iframe", iframe_content, get_key, "function-script");
+        write_js_into_frame(iframe_pattern_content, variants_data[variant_number].benchmark_data, "benchmark-script");
+        write_js_into_frame(iframe_content, variants_data[variant_number].benchmark_data, "benchmark-script");
+        write_js_into_frame(iframe_pattern_content, get_key, "function-script");
+        write_js_into_frame(iframe_content, get_key, "function-script");
         if (benchmark_data_editor) {
             benchmark_data_editor.clearHistory();
             benchmark_data_editor.setValue(variants_data[variant_number].benchmark_data);
+            benchmark_data_editor.clearHistory();
         } else {
             benchmark_data_editor = make_editor("benchmark-data", "text/javascript", "3024-day", true, variants_data[variant_number].benchmark_data, false);
         }
         if (code_area_js){
             code_area_js.clearHistory();
             code_area_js.setValue(variants_data[variant_number].user_code);
+            code_area_js.clearHistory();
         } else {
             code_area_js = make_editor("js-area", "text/javascript", "3024-day", false, variants_data[variant_number].user_code, false);
         }
         setTimeout(function(){
-            //write_js_into_frame("result_iframe", iframe_content, variants_data[variant_number].user_code, "user-script");
-            write_js_into_frame("pattern-iframe", iframe_pattern_content, variants_data[variant_number].decision_js_function, "complete-script");
+            write_js_into_frame(iframe_content, variants_data[variant_number].user_code, "user-script");
+            write_js_into_frame(iframe_pattern_content, variants_data[variant_number].decision_js_function, "complete-script");
         }, 100);
     }
 
-    function write_js_into_frame(iframe_id, iframe, js_code, id) {
+    function write_js_into_frame(iframe, js_code, id) {
         var selector = "#"+id;
         var script = iframe.querySelector(selector);
         if (script == null){
             script = document.createElement('script');
             script.id = id;
             script.text  = js_code;
-            //iframe.body.appendChild(script);
+            iframe.body.appendChild(script);
         } else {
             var children = iframe.body.childNodes;
             for (var i= 0; i<children.length; i++){
@@ -190,8 +191,29 @@ function course_module() {
             script = document.createElement('script');
             script.id = id;
             script.text  = js_code;
-            //iframe.body.appendChild(script);
+            iframe.body.appendChild(script);
         }
+    }
+
+    function save_task_code(){
+        code_area_js.on("focus", function(){
+            $(this).on("mousedown", function(){
+                variants_data[variant].user_code = code_area_js.getValue();
+                write_js_into_frame(iframe_content, variants_data[variant].user_code, "user-script");
+            });
+            $(this).on("keydown", function(){
+                $(this).on("keyup", function(){
+                    variants_data[variant].user_code = code_area_js.getValue();
+                    write_js_into_frame(iframe_content, variants_data[variant].user_code, "user-script");
+                    $(this).off("keyup");
+                })
+            });
+            $(this).on("focusout", function(){
+                $(this).off("mousedown");
+                $(this).off("keydown");
+                $(this).off("focusout");
+            })
+        });
     }
 
     function init() {
@@ -225,22 +247,7 @@ function course_module() {
                 $(".navigation-btn-prev").removeClass("not-active");
             }
         });
-        code_area_js.on("focus", function(){
-            $(this).on("mousedown", function(){
-                variants_data[variant].user_code = code_area_js.getValue();
-            });
-            $(this).on("keydown", function(){
-                $(this).on("keyup", function(){
-                    variants_data[variant].user_code = code_area_js.getValue();
-                    $(this).off("keyup");
-                })
-            });
-            $(this).on("focusout", function(){
-                $(this).off("mousedown");
-                $(this).off("keydown");
-                $(this).off("focusout");
-            })
-        });
+        save_task_code();
         $(".control-check-btn").click(function(){
             //check("img/alpaka.png", "img/coala.jpg");
             html2canvas(iframe_content.body).then(function(result1) {
