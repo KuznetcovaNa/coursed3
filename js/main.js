@@ -148,6 +148,8 @@ function course_module() {
     function change_task(variant_number) {
         $(".navigation-number")[0].innerHTML = variant_number + "/4";
         $(".control-text-task")[0].innerHTML = variants_data[variant_number].task_text;
+        clear_iframe_body(iframe_content);
+        clear_iframe_body(iframe_pattern_content);
         write_js_into_frame(iframe_pattern_content, variants_data[variant_number].benchmark_data, "benchmark-script");
         write_js_into_frame(iframe_content, variants_data[variant_number].benchmark_data, "benchmark-script");
         write_js_into_frame(iframe_pattern_content, get_key, "function-script");
@@ -167,43 +169,43 @@ function course_module() {
             code_area_js = make_editor("js-area", "text/javascript", "3024-day", false, variants_data[variant_number].user_code, false);
         }
         setTimeout(function(){
+            clear_iframe_body(iframe_content);
+            write_js_into_frame(iframe_content, variants_data[variant_number].benchmark_data, "benchmark-script");
+            write_js_into_frame(iframe_content, get_key, "function-script");
             write_js_into_frame(iframe_content, variants_data[variant_number].user_code, "user-script");
+            clear_iframe_body(iframe_pattern_content);
+            write_js_into_frame(iframe_pattern_content, variants_data[variant_number].benchmark_data, "benchmark-script");
+            write_js_into_frame(iframe_pattern_content, get_key, "function-script");
             write_js_into_frame(iframe_pattern_content, variants_data[variant_number].decision_js_function, "complete-script");
         }, 100);
     }
 
+    function clear_iframe_body(iframe){
+        iframe.body.innerHTML = "";
+    }
+
     function write_js_into_frame(iframe, js_code, id) {
-        var selector = "#"+id;
-        var script = iframe.querySelector(selector);
-        if (script == null){
-            script = document.createElement('script');
-            script.id = id;
-            script.text  = js_code;
-            iframe.body.appendChild(script);
-        } else {
-            var children = iframe.body.childNodes;
-            for (var i= 0; i<children.length; i++){
-                if (children[i].nodeName !== "SCRIPT"){
-                    children[i].remove();
-                }
-            }
-            script.remove();
-            script = document.createElement('script');
-            script.id = id;
-            script.text  = js_code;
-            iframe.body.appendChild(script);
-        }
+        var script = document.createElement('script');
+        script.id = id;
+        script.text  = js_code;
+        iframe.body.appendChild(script);
     }
 
     function save_task_code(){
         code_area_js.on("focus", function(){
             $(this).on("mousedown", function(){
                 variants_data[variant].user_code = code_area_js.getValue();
+                clear_iframe_body(iframe_content);
+                write_js_into_frame(iframe_content, variants_data[variant].benchmark_data, "benchmark-script");
+                write_js_into_frame(iframe_content, get_key, "function-script");
                 write_js_into_frame(iframe_content, variants_data[variant].user_code, "user-script");
             });
             $(this).on("keydown", function(){
                 $(this).on("keyup", function(){
                     variants_data[variant].user_code = code_area_js.getValue();
+                    clear_iframe_body(iframe_content);
+                    write_js_into_frame(iframe_content, variants_data[variant].benchmark_data, "benchmark-script");
+                    write_js_into_frame(iframe_content, get_key, "function-script");
                     write_js_into_frame(iframe_content, variants_data[variant].user_code, "user-script");
                     $(this).off("keyup");
                 })
