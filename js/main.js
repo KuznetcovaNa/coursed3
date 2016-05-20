@@ -1,52 +1,84 @@
 function course_module() {
     var variants_data = {
         1: {
-            benchmark_data: "var nodes = [\n    {\n        name: 'test_question_1', \n        x: 250, \n        y: 100, \n        text: 'Вы любите эвкалипт?'\n    }\n];",
-            task_text: "Нарисуйте круг с вопросом теста внутри.",
-            decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 570);var node = svg.selectAll('.node').data(nodes).enter().append('g').attr('class', 'node');node.append('svg:circle').attr('r', '60px').attr('fill', '#F7C092').attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });node.append('text').text(function(d) { return d.text; }).each(function(d){d3plus.textwrap().container(d3.select(this)).valign('middle').draw();});",
-            //user_code: "//Располагайте здесь JavaScript-код",
-            user_code: 'var x = document.createElement("P");\nvar t = document.createTextNode("1");\nx.appendChild(t);\ndocument.body.appendChild(x);',
+            benchmark_data: "var circles = [\n    {\n        name: 'circle_1', \n        x: 250, \n        y: 150\n    }\n];" +
+            "\nvar lines = [\n    {\n        name: 'line_1', \n        x_1: 100, \n        y_1: 240, \n        x_2: 400, \n        y_2: 240\n    }\n];",
+            task_text: "Нарисуйте линию и круг. Цвет заливки круга - #fafbff, цвет обводки круга - #000080, цвет линии - #000080.",
+            decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 270);" +
+            "var line = svg.selectAll('.line').data(lines).enter().append('g').attr('class', 'line');" +
+            "line.append('line').attr('stroke', '#000080').style('stroke-width', 20).attr('x1', function (d) {return d.x_1})" +
+            ".attr('x2', function (d) {return d.x_2}).attr('y1', function (d) {return d.y_1}).attr('y2', function (d) {return d.y_2});" +
+            "var circle = svg.selectAll('.circle').data(circles).enter().append('g').attr('class', 'circle');" +
+            "circle.append('svg:circle').attr('r', '60px').attr('fill', '#fafbff').attr('stroke', '#000080')." +
+            "attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });",
+            user_code: "//Располагайте здесь JavaScript-код",
             checked: {
                 true_percentage: 0,
                 is_ok: false
             }
         },
         2: {
-            benchmark_data: "var nodes = [{\n    name: 'test_question_1', \n    x: 250, \n    y: 100, \n    text: 'Вы любите какао?'\n    }, \n    {\n    name: 'test_question_2', \n    x: 400, \n    y: 300, \n    text: 'У Вас есть мех?'\n    }, \n    {\n    name: 'test_question_3', \n    x: 100, \n    y: 300, \n    text: 'Вы спите по 20 часов?'\n}];" +
-            "\nvar links = [{\n    source: 'test_question_1', \n    target: 'test_question_2', \n    x: 150, \n    y: 200, \n    text: 'Да'\n    }, \n    {\n    source: 'test_question_1', \n    target: 'test_question_3', \n    x: 325, \n    y: 200, \n    text: 'Нет'\n}];",
-            task_text: "Соедините вершины с вопросами ребрaми.",
-            decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 570);" +
+            benchmark_data: "var nodes = [\n    {\n        name: 'node_1', \n        x: 250, \n        y: 100,\n    }," +
+            " \n    {\n        name: 'node_2', \n        x: 400, \n        y: 300,\n    }," +
+            " \n    {\n        name: 'node_3', \n        x: 100, \n        y: 300,\n    }\n];" +
+            "\nvar links = [\n    {\n        name: 'link_1',\n        source: 'node_1', \n        target: 'node_2', " +
+            "\n        x: 150, \n        y: 200,\n    }, \n    {\n        name: 'link_2',\n        source: 'node_1'," +
+            " \n        target: 'node_3', \n        x: 325, \n        y: 200,\n    }\n];",
+            task_text: "Соедините рёбрами вершины. Цвет заливки вершин - #fafbff, цвет обводки вершин - #000080, цвет рёбер - #000080.",
+            decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 500);" +
             "var link = svg.selectAll('.link').data(links).enter().append('g').attr('class', 'link');" +
             "var node = svg.selectAll('.node').data(nodes).enter().append('g').attr('class', 'node');" +
-            "link.append('text').attr('x', function(d) { return d.x; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });" +
-            "link.append('line').attr('class', 'line').attr('stroke', '#000080').style('stroke-width', 2).attr('x1', function(d) { return nodes[get_key(nodes, d.source)].x; }).attr('x2', function(d) { return nodes[get_key(nodes, d.target)].x;}).attr('y1', function(d) { return nodes[get_key(nodes, d.source)].y; }).attr('y2', function(d) { return nodes[get_key(nodes, d.target)].y; });" +
-            "node.append('svg:circle').attr('r', '60px').attr('fill', '#F7C092').attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });node.append('text').text(function(d) { return d.text; }).each(function(d){d3plus.textwrap().container(d3.select(this)).valign('middle').draw();})",
-            //user_code: "//Располагайте здесь JavaScript-код",
-            user_code: 'var x = document.createElement("P");\nvar t = document.createTextNode("2");\nx.appendChild(t);\ndocument.body.appendChild(x);',
+            "link.append('line').attr('class', 'line').attr('stroke', '#000080').style('stroke-width', 2)." +
+            "attr('x1', function(d) { return nodes[get_key(nodes, d.source)].x; }).attr('x2', function(d) " +
+            "{ return nodes[get_key(nodes, d.target)].x;}).attr('y1', function(d) " +
+            "{ return nodes[get_key(nodes, d.source)].y; }).attr('y2', function(d) { return nodes[get_key(nodes, d.target)].y; });" +
+            "node.append('svg:circle').attr('r', '60px').attr('fill', '#fafbff').attr('stroke', '#000080')." +
+            "attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });",
+            user_code: "//Располагайте здесь JavaScript-код",
             checked: {
                 true_percentage: 0,
                 is_ok: false
             }
         },
         3: {
-            benchmark_data: "var nodes = [\n    {name: 'test_question_1', \n    x: 250, \n    y: 100, \n    text: 'Вы альпака!', \n    img: '../img/alpaka.png'}]",
-            task_text: "доделать стили",
-            decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 570);var node = svg.selectAll('.node').data(nodes).enter().append('g').attr('class', 'node');node.append('svg:circle').attr('r', '80px')." +
-            "attr('fill', '#F7C092').attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });" +
-            "node.append('text').attr('x', function(d) { return d.x - 75; }).attr('y', function(d) { return d.y; }).text(function(d) { return d.text; });",
-            //user_code: "//Располагайте здесь JavaScript-код",
-            user_code: 'var x = document.createElement("P");\nvar t = document.createTextNode("3");\nx.appendChild(t);\ndocument.body.appendChild(x);',
+            benchmark_data: "var nodes = [\n    {\n        name: 'test_question_1', \n        x: 250, \n        y: 100, \n        text: 'Здесь будет вопрос.'\n    }\n]" +
+            "\nvar links = [\n    {\n        name: 'link_1', \n        x_1: 225, \n        y_1: 450, \n        x_2: 275, \n        y_2: 250,\n        text: 'А здесь ответ на вопрос.'\n    }\n];",
+            task_text: "Добавим вершинам и рёбрам текст. Цвет заливки вершины - #fafbff, цвет обводки вершины - #000080, цвет рeбра - #000080.",
+            decision_js_function: " var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 570);" +
+            "var link = svg.selectAll('.line').data(links).enter().append('g').attr('class', 'line');" +
+            "var node = svg.selectAll('.nodes').data(nodes).enter().append('g').attr('class', 'circle');" +
+            "link.append('line').attr('stroke', '#000080').style('stroke-width', 2).attr('x1', function (d) " +
+            "{ return d.x_1 }).attr('x2', function (d) { return d.x_2 }).attr('y1', function (d) { return d.y_1 })" +
+            ".attr('y2', function (d) { return d.y_2 });link.append('svg:circle').attr('r', 40).attr('fill', 'transparent')" +
+            ".attr('cx', function (d) { return (d.x_1); }).attr('cy', function (d) { return (d.y_1+(d.y_2- d.y_1)/2); });" +
+            "link.append('text').text(function (d) { return d.text; }).each(function (d) {d3plus.textwrap().container(d3.select(this))" +
+            ".valign('middle').draw();});node.append('svg:circle').attr('r', '60px').attr('fill', '#fafbff').attr('stroke', '#000080')" +
+            ".attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });node.append('text').text(function (d) " +
+            "{return d.text;}).each(function (d) {d3plus.textwrap().container(d3.select(this)).valign('middle').draw();});",
+            user_code: "//Располагайте здесь JavaScript-код",
             checked: {
                 true_percentage: 0,
                 is_ok: false
             }
         },
         4: {
-            benchmark_data: "var task44;",
-            task_text: "что-то грандиозное",
-            decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 570);",
-            //user_code: "//Располагайте здесь JavaScript-код",
-            user_code: 'var x = document.createElement("P");\nvar t = document.createTextNode("4");\nx.appendChild(t);\ndocument.body.appendChild(x);',
+            benchmark_data: "var nodes = [\n        {\n            " +
+            "name: 'test_question_1',\n            x: 250,\n            y: 100,\n            text: 'Вы общительный?'\n        },\n        {\n            " +
+            "name: 'test_question_2',\n            x: 125,\n            y: 275,\n            text: 'Как предпочтете провести выходные?'\n        },\n        {\n            " +
+            "name: 'test_question_3',\n            x: 375,\n            y: 275,\n            text: 'Что пожелаете съесть на завтрак?'\n        },\n        {\n            " +
+            "name: 'result_1',\n            x: 60,\n            y: 450,\n            text: 'Серьезная капибара',\n            img: '../img/capybara.png'\n        },\n        {\n            " +
+            "name: 'result_2',\n            x: 187,\n            y: 450,\n            text: 'Грациозная альпака',\n            img: '../img/alpaka.png'\n        },\n        {\n            " +
+            "name: 'result_3',\n            x: 314,\n            y: 450,\n            text: 'Таинственная лисица',\n            img: '../img/tibetan_fox.png'\n        },\n        {\n            " +
+            "name: 'result_4',\n            x: 440,\n            y: 450,\n            text: 'Неторопливая коала',\n            img: '../img/koala.png'\n        }\n    ];\nvar links = [\n        {\n            " +
+            "source: 'test_question_1',\n            target: 'test_question_2',\n            text: 'Да'\n        },\n        {\n            " +
+            "source: 'test_question_1',\n            target: 'test_question_3',\n            text: 'Нет'\n        },\n        {\n            " +
+            "source: 'test_question_2',\n            target: 'result_1',\n            text: 'Плавание в бассейне'\n        },\n        {\n            " +
+            "source: 'test_question_2',\n            target: 'result_2',\n            text: 'Прогулка в горах'\n        },\n        {\n            " +
+            "source: 'test_question_3',\n            target: 'result_3',\n            text: 'Мясная котлета'\n        },\n        {\n            " +
+            "source: 'test_question_3',\n            target: 'result_4',\n            text: 'Овощной салат'\n        }\n    ];",
+            task_text: "Постройте диаграмму. Цвет заливки вершин - #fafbff, цвет обводки вершин - #000080, цвет рёбер - #000080.",
+            decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 570);var link = svg.selectAll('.link').data(links).enter().append('g').attr('class', 'link');var node = svg.selectAll('.node').data(nodes).enter().append('g').attr('class', 'node');link.append('line').attr('class', 'line').attr('stroke', '#000080').style('stroke-width', 2).attr('x1', function (d) { return nodes[get_key(nodes, d.source)].x; }).attr('x2', function (d) { return nodes[get_key(nodes, d.target)].x; }).attr('y1', function (d) { return nodes[get_key(nodes, d.source)].y; }).attr('y2', function (d) { return nodes[get_key(nodes, d.target)].y; });link.append('svg:circle').attr('r', 40).attr('fill', 'transparent').attr('cx', function (d) { return (nodes[get_key(nodes, d.target)].x); }).attr('cy', function (d) {return (nodes[get_key(nodes, d.source)].y+Math.abs(nodes[get_key(nodes, d.source)].y-nodes[get_key(nodes, d.target)].y)/2);});link.append('text').text(function (d) { return d.text; }).each(function (d) {d3plus.textwrap().container(d3.select(this)).valign('middle').draw();});node.append('svg:circle').attr('r', '60px').attr('fill', '#fafbff').attr('stroke', '#000080').attr('cx', function (d) { return d.x; }).attr('cy', function (d) { return d.y; });node.append('text').text(function (d) { return d.text; }).each(function (d) {d3plus.textwrap().container(d3.select(this)).valign('middle').draw();});",
+            user_code: "//Располагайте здесь JavaScript-код",
             checked: {
                 true_percentage: 0,
                 is_ok: false
@@ -68,38 +100,115 @@ function course_module() {
             .append('svg')
             .attr('width', 500)
             .attr('height', 570);
+        var line = svg.selectAll('.line')
+            .data(lines)
+            .enter()
+            .append('g')
+            .attr('class', 'line');
+        line.append('line')
+            .attr('stroke', '#000080')
+            .style('stroke-width', 20)
+            .attr('x1', function (d) { return d.x_1 })
+            .attr('x2', function (d) { return d.x_2 })
+            .attr('y1', function (d) { return d.y_1 })
+            .attr('y2', function (d) { return d.y_2 });
+        var circle = svg.selectAll('.circle')
+            .data(circles).enter()
+            .append('g')
+            .attr('class', 'circle');
+        circle.append('svg:circle')
+            .attr('r', '60px')
+            .attr('fill', '#fafbff')
+            .attr('stroke', '#000080')
+            .attr('cx', function(d) { return d.x; })
+            .attr('cy', function(d) { return d.y; });
+    }
 
+    function task2() {
+        var svg = d3.select('body')
+            .append('svg')
+            .attr('width', 500)
+            .attr('height', 500);
+        var link = svg.selectAll('.link')
+            .data(links)
+            .enter()
+            .append('g')
+            .attr('class', 'link');
         var node = svg.selectAll('.node')
             .data(nodes)
-            .enter().append('g')
+            .enter()
+            .append('g')
             .attr('class', 'node');
-
-        node.append('circle')
+        link.append('line')
+            .attr('class', 'line')
+            .attr('stroke', '#000080')
+            .style('stroke-width', 2)
+            .attr('x1', function (d) { return nodes[get_key(nodes, d.source)].x; })
+            .attr('x2', function (d) { return nodes[get_key(nodes, d.target)].x; })
+            .attr('y1', function (d) { return nodes[get_key(nodes, d.source)].y; })
+            .attr('y2', function (d) { return nodes[get_key(nodes, d.target)].y; });
+        node.append('svg:circle')
             .attr('r', '60px')
-            .attr('fill', '#F7C092')
-            .attr('cx', function (d) {
-                return d.x;
-            })
-            .attr('cy', function (d) {
-                return d.y;
-            });
+            .attr('fill', '#fafbff')
+            .attr('stroke', '#000080')
+            .attr('stroke', '#000080')
+            .attr('cx', function (d) { return d.x; })
+            .attr('cy', function (d) { return d.y; });
+    }
 
+    function task3() {
+        var svg = d3.select('body')
+            .append('svg')
+            .attr('width', 500)
+            .attr('height', 570);
+        var link = svg.selectAll('.line')
+            .data(links)
+            .enter()
+            .append('g')
+            .attr('class', 'line');
+        var node = svg.selectAll('.nodes')
+            .data(nodes).enter()
+            .append('g')
+            .attr('class', 'circle');
+        link.append('line')
+            .attr('stroke', '#000080')
+            .style('stroke-width', 2)
+            .attr('x1', function (d) { return d.x_1 })
+            .attr('x2', function (d) { return d.x_2 })
+            .attr('y1', function (d) { return d.y_1 })
+            .attr('y2', function (d) { return d.y_2 });
+        link.append('svg:circle')
+            .attr('r', 40)
+            .attr('fill', 'transparent')
+            .attr('cx', function (d) { return (d.x_1); })
+            .attr('cy', function (d) { return (d.y_1+(d.y_2- d.y_1)/2); });
+        link.append('text')
+            .text(function (d) { return d.text; })
+            .each(function (d) {
+                d3plus.textwrap()
+                    .container(d3.select(this))
+                    .valign('middle')
+                    .draw();
+            });
+        node.append('svg:circle')
+            .attr('r', '60px')
+            .attr('fill', '#fafbff')
+            .attr('stroke', '#000080')
+            .attr('cx', function(d) { return d.x; })
+            .attr('cy', function(d) { return d.y; });
         node.append('text')
-            //.attr("text-anchor", "middle")
-            //.attr('x', function(d) { return d.x; })
-            //.attr('y', function(d) { return d.y; })
             .text(function (d) {
                 return d.text;
             })
             .each(function (d) {
                 d3plus.textwrap()
                     .container(d3.select(this))
-                    .valign("middle")
+                    .valign('middle')
                     .draw();
             });
     }
 
-    function task2() {
+    function task4() {
         var svg = d3.select('body')
             .append('svg')
             .attr('width', 500)
@@ -118,55 +227,39 @@ function course_module() {
             .attr('class', 'line')
             .attr('stroke', '#000080')
             .style('stroke-width', 2)
-            .attr('x1', function (d) {
-                return nodes[get_key(nodes, d.source)].x;
-            })
-            .attr('x2', function (d) {
-                return nodes[get_key(nodes, d.target)].x;
-            })
-            .attr('y1', function (d) {
-                return nodes[get_key(nodes, d.source)].y;
-            })
-            .attr('y2', function (d) {
-                return nodes[get_key(nodes, d.target)].y;
+            .attr('x1', function (d) { return nodes[get_key(nodes, d.source)].x; })
+            .attr('x2', function (d) { return nodes[get_key(nodes, d.target)].x; })
+            .attr('y1', function (d) { return nodes[get_key(nodes, d.source)].y; })
+            .attr('y2', function (d) { return nodes[get_key(nodes, d.target)].y; });
+        link.append('svg:circle')
+            .attr('r', 40)
+            .attr('fill', 'transparent')
+            .attr('cx', function (d) { return (nodes[get_key(nodes, d.target)].x); })
+            .attr('cy', function (d) {
+                return (nodes[get_key(nodes, d.source)].y+Math.abs(nodes[get_key(nodes, d.source)].y-nodes[get_key(nodes, d.target)].y)/2);
             });
         link.append('text')
-            .attr('x', function (d) {
-                return d.x;
-            })
-            .attr('y', function (d) {
-                return d.y;
-            })
-            .text(function (d) {
-                return d.text;
-            });
-        node.append('svg:circle')
-            .attr('r', '60px')
-            .attr('fill', '#F7C092')
-            .attr('cx', function (d) {
-                return d.x;
-            })
-            .attr('cy', function (d) {
-                return d.y;
-            });
-        node.append('text')
-            .text(function (d) {
-                return d.text;
-            })
+            .text(function (d) { return d.text; })
             .each(function (d) {
                 d3plus.textwrap()
                     .container(d3.select(this))
                     .valign('middle')
                     .draw();
             });
-    }
-
-    function task3() {
-
-    }
-
-    function task4() {
-
+        node.append('svg:circle')
+            .attr('r', '60px')
+            .attr('fill', '#fafbff')
+            .attr('stroke', '#000080')
+            .attr('cx', function (d) { return d.x; })
+            .attr('cy', function (d) { return d.y; });
+        node.append('text')
+            .text(function (d) { return d.text; })
+            .each(function (d) {
+                d3plus.textwrap()
+                    .container(d3.select(this))
+                    .valign('middle')
+                    .draw();
+            });
     }
 
     function get_key(obj, value) {
@@ -212,15 +305,14 @@ function course_module() {
         resemble(image1).compareTo(image2).onComplete(function (data) {
             var true_percentage = 100 - data.misMatchPercentage;
             if (true_percentage >= 98) {
-                $(".control-check-indicator").html("ok: " + true_percentage + "%");
+                $(".control-check-indicator").html("ок: " + true_percentage + "%").css("display", "inline-block");
                 variants_data[variant].checked.is_ok = true;
                 variants_data[variant].checked.true_percentage = true_percentage;
             } else {
-                $(".control-check-indicator").html("nope :(");
+                $(".control-check-indicator").html("незачёт").css("display", "inline-block");
                 variants_data[variant].checked.is_ok = false;
                 variants_data[variant].checked.true_percentage = true_percentage;
             }
-            console.log(data);
             return data;
         });
     }
@@ -268,7 +360,7 @@ function course_module() {
             write_js_into_frame(iframe_content, variants_data[variant_number].user_code, "user-script");
             write_js_into_frame(iframe_pattern_content, variants_data[variant_number].decision_js_function, "complete-script");
         }, 100);
-        $(".control-check-indicator").html("???");
+        $(".control-check-indicator").css("display", "none").html("?");
     }
 
     function clear_iframe_body(iframe) {
@@ -285,7 +377,7 @@ function course_module() {
     function save_task_code() {
         code_area_js.on("focus", function () {
             $(this).on("mousedown", function () {
-                variants_data[variant].user_code = code_area_js.getValue();
+                variants_data[variant].user_code = " try { \n" + code_area_js.getValue() + "\n } catch (e) {console.log(e)};";
                 clear_iframe_body(iframe_content);
                 write_js_into_frame(iframe_content, variants_data[variant].benchmark_data, "benchmark-script");
                 write_js_into_frame(iframe_content, get_key, "function-script");
@@ -293,7 +385,7 @@ function course_module() {
             });
             $(this).on("keydown", function () {
                 $(this).on("keyup", function () {
-                    variants_data[variant].user_code = code_area_js.getValue();
+                    variants_data[variant].user_code = " try { \n" + code_area_js.getValue() + "\n } catch(e) {console.log(e)};";
                     clear_iframe_body(iframe_content);
                     write_js_into_frame(iframe_content, variants_data[variant].benchmark_data, "benchmark-script");
                     write_js_into_frame(iframe_content, get_key, "function-script");
@@ -342,7 +434,6 @@ function course_module() {
         });
         save_task_code();
         $(".control-check-btn").click(function () {
-            //check("img/alpaka.png", "img/coala.jpg");
             html2canvas(iframe_content.body).then(function (result1) {
                 html2canvas(iframe_pattern_content.body).then(function (result2) {
                     check(result1.toDataURL(), result2.toDataURL());
