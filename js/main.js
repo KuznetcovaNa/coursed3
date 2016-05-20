@@ -66,10 +66,10 @@ function course_module() {
             "name: 'test_question_1',\n            x: 250,\n            y: 100,\n            text: 'Вы общительный?'\n        },\n        {\n            " +
             "name: 'test_question_2',\n            x: 125,\n            y: 275,\n            text: 'Как предпочтете провести выходные?'\n        },\n        {\n            " +
             "name: 'test_question_3',\n            x: 375,\n            y: 275,\n            text: 'Что пожелаете съесть на завтрак?'\n        },\n        {\n            " +
-            "name: 'result_1',\n            x: 60,\n            y: 450,\n            text: 'Серьезная капибара',\n            img: '../img/capybara.png'\n        },\n        {\n            " +
-            "name: 'result_2',\n            x: 187,\n            y: 450,\n            text: 'Грациозная альпака',\n            img: '../img/alpaka.png'\n        },\n        {\n            " +
-            "name: 'result_3',\n            x: 314,\n            y: 450,\n            text: 'Таинственная лисица',\n            img: '../img/tibetan_fox.png'\n        },\n        {\n            " +
-            "name: 'result_4',\n            x: 440,\n            y: 450,\n            text: 'Неторопливая коала',\n            img: '../img/koala.png'\n        }\n    ];\nvar links = [\n        {\n            " +
+            "name: 'result_1',\n            x: 60,\n            y: 450,\n            text: 'Серьезная капибара',\n            img: 'img/capybara.png'\n        },\n        {\n            " +
+            "name: 'result_2',\n            x: 187,\n            y: 450,\n            text: 'Грациозная альпака',\n            img: 'img/alpaka.png'\n        },\n        {\n            " +
+            "name: 'result_3',\n            x: 314,\n            y: 450,\n            text: 'Таинственная лисица',\n            img: 'img/tibetan_fox.png'\n        },\n        {\n            " +
+            "name: 'result_4',\n            x: 440,\n            y: 450,\n            text: 'Неторопливая коала',\n            img: 'img/koala.png'\n        }\n    ];\nvar links = [\n        {\n            " +
             "source: 'test_question_1',\n            target: 'test_question_2',\n            text: 'Да'\n        },\n        {\n            " +
             "source: 'test_question_1',\n            target: 'test_question_3',\n            text: 'Нет'\n        },\n        {\n            " +
             "source: 'test_question_2',\n            target: 'result_1',\n            text: 'Плавание в бассейне'\n        },\n        {\n            " +
@@ -77,7 +77,7 @@ function course_module() {
             "source: 'test_question_3',\n            target: 'result_3',\n            text: 'Мясная котлета'\n        },\n        {\n            " +
             "source: 'test_question_3',\n            target: 'result_4',\n            text: 'Овощной салат'\n        }\n    ];",
             task_text: "Постройте диаграмму. Цвет заливки вершин - #fafbff, цвет обводки вершин - #000080, цвет рёбер - #000080.",
-            decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 570);var link = svg.selectAll('.link').data(links).enter().append('g').attr('class', 'link');var node = svg.selectAll('.node').data(nodes).enter().append('g').attr('class', 'node');link.append('line').attr('class', 'line').attr('stroke', '#000080').style('stroke-width', 2).attr('x1', function (d) { return nodes[get_key(nodes, d.source)].x; }).attr('x2', function (d) { return nodes[get_key(nodes, d.target)].x; }).attr('y1', function (d) { return nodes[get_key(nodes, d.source)].y; }).attr('y2', function (d) { return nodes[get_key(nodes, d.target)].y; });link.append('svg:circle').attr('r', 40).attr('fill', 'transparent').attr('cx', function (d) { return (nodes[get_key(nodes, d.target)].x); }).attr('cy', function (d) {return (nodes[get_key(nodes, d.source)].y+Math.abs(nodes[get_key(nodes, d.source)].y-nodes[get_key(nodes, d.target)].y)/2);});link.append('text').text(function (d) { return d.text; }).each(function (d) {d3plus.textwrap().container(d3.select(this)).valign('middle').draw();});node.append('svg:circle').attr('r', '60px').attr('fill', '#fafbff').attr('stroke', '#000080').attr('cx', function (d) { return d.x; }).attr('cy', function (d) { return d.y; });node.append('text').text(function (d) { return d.text; }).each(function (d) {d3plus.textwrap().container(d3.select(this)).valign('middle').draw();});",
+            decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 570);var link = svg.selectAll('.link').data(links).enter().append('g').attr('class', 'link');var node = svg.selectAll('.node').data(nodes).enter().append('g').attr('class', 'node').each(function(d){d3.select(this).append('svg:circle').attr('r', '60px').attr('fill', '#fafbff').attr('stroke', '#000080').attr('cx', function (d) { return d.x; }).attr('cy', function (d) { return d.y; });d3.select(this).append('text').text(function (d) { return d.text; }).each(function (d) {if(d.img){ d3.select(this).attr('y', '480'); }d3plus.textwrap().container(d3.select(this)).valign('middle').draw();});if(d.img){ d3.select(this).append('svg:image').attr('x',d.x-40).attr('y',d.y-40).attr('width', 80).attr('height', 80).attr('xlink:href', d.img);}});link.append('line').attr('class', 'line').attr('stroke', '#000080').style('stroke-width', 2).attr('x1', function (d) { return nodes[get_key(nodes, d.source)].x; }).attr('x2', function (d) { return nodes[get_key(nodes, d.target)].x; }).attr('y1', function (d) { return nodes[get_key(nodes, d.source)].y; }).attr('y2', function (d) { return nodes[get_key(nodes, d.target)].y; });link.append('svg:circle').attr('r', 40).attr('fill', 'transparent').attr('cx', function (d) { return (nodes[get_key(nodes, d.target)].x); }).attr('cy', function (d) {return (nodes[get_key(nodes, d.source)].y+Math.abs(nodes[get_key(nodes, d.source)].y-nodes[get_key(nodes, d.target)].y)/2);});link.append('text').text(function (d) { return d.text; }).each(function (d) {d3plus.textwrap().container(d3.select(this)).valign('middle').draw();});",
             user_code: "//Располагайте здесь JavaScript-код",
             checked: {
                 true_percentage: 0,
@@ -95,7 +95,7 @@ function course_module() {
     var iframe_pattern;
     var iframe_pattern_content;
 
-    function task1() {
+    function task_1() {
         var svg = d3.select('body')
             .append('svg')
             .attr('width', 500)
@@ -124,7 +124,7 @@ function course_module() {
             .attr('cy', function(d) { return d.y; });
     }
 
-    function task2() {
+    function task_2() {
         var svg = d3.select('body')
             .append('svg')
             .attr('width', 500)
@@ -156,7 +156,7 @@ function course_module() {
             .attr('cy', function (d) { return d.y; });
     }
 
-    function task3() {
+    function task_3() {
         var svg = d3.select('body')
             .append('svg')
             .attr('width', 500)
@@ -208,7 +208,7 @@ function course_module() {
             });
     }
 
-    function task4() {
+    function task_4() {
         var svg = d3.select('body')
             .append('svg')
             .attr('width', 500)
@@ -222,7 +222,30 @@ function course_module() {
             .data(nodes)
             .enter()
             .append('g')
-            .attr('class', 'node');
+            .attr('class', 'node')
+            .each(function(d){
+                d3.select(this)
+                    .append('svg:circle')
+                    .attr('r', '60px')
+                    .attr('fill', '#fafbff')
+                    .attr('stroke', '#000080')
+                    .attr('cx', function (d) { return d.x; })
+                    .attr('cy', function (d) { return d.y; });
+                d3.select(this).append('text')
+                    .text(function (d) { return d.text; })
+                    .each(function (d) {
+                        if(d.img){ d3.select(this).attr('y', '480'); }
+                        d3plus.textwrap()
+                            .container(d3.select(this))
+                            .valign('middle')
+                            .draw();
+                    });
+                if(d.img){ d3.select(this).append("svg:image")
+                    .attr('x',d.x-40)
+                    .attr('y',d.y-40)
+                    .attr('width', 80)
+                    .attr('height', 80).attr("xlink:href", d.img);}
+            });
         link.append('line')
             .attr('class', 'line')
             .attr('stroke', '#000080')
@@ -239,20 +262,6 @@ function course_module() {
                 return (nodes[get_key(nodes, d.source)].y+Math.abs(nodes[get_key(nodes, d.source)].y-nodes[get_key(nodes, d.target)].y)/2);
             });
         link.append('text')
-            .text(function (d) { return d.text; })
-            .each(function (d) {
-                d3plus.textwrap()
-                    .container(d3.select(this))
-                    .valign('middle')
-                    .draw();
-            });
-        node.append('svg:circle')
-            .attr('r', '60px')
-            .attr('fill', '#fafbff')
-            .attr('stroke', '#000080')
-            .attr('cx', function (d) { return d.x; })
-            .attr('cy', function (d) { return d.y; });
-        node.append('text')
             .text(function (d) { return d.text; })
             .each(function (d) {
                 d3plus.textwrap()
@@ -377,7 +386,7 @@ function course_module() {
     function save_task_code() {
         code_area_js.on("focus", function () {
             $(this).on("mousedown", function () {
-                variants_data[variant].user_code = " try { \n" + code_area_js.getValue() + "\n } catch (e) {console.log(e)};";
+                variants_data[variant].user_code = code_area_js.getValue();
                 clear_iframe_body(iframe_content);
                 write_js_into_frame(iframe_content, variants_data[variant].benchmark_data, "benchmark-script");
                 write_js_into_frame(iframe_content, get_key, "function-script");
@@ -385,7 +394,7 @@ function course_module() {
             });
             $(this).on("keydown", function () {
                 $(this).on("keyup", function () {
-                    variants_data[variant].user_code = " try { \n" + code_area_js.getValue() + "\n } catch(e) {console.log(e)};";
+                    variants_data[variant].user_code = code_area_js.getValue();
                     clear_iframe_body(iframe_content);
                     write_js_into_frame(iframe_content, variants_data[variant].benchmark_data, "benchmark-script");
                     write_js_into_frame(iframe_content, get_key, "function-script");
