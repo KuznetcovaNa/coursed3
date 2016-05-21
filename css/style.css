@@ -94,9 +94,6 @@ body {
     border: none;
 }
 
-.workspace-pattern {
-}
-
 .icon {
     position: absolute;
     width: 18px;
@@ -178,7 +175,7 @@ body {
 .control-text-task {
     display: inline-block;
     min-width: 34%;
-    width: 50%;
+    width: 45%;
     background-color: #fff;
     border: 1px solid #000080;
     color: #000080;

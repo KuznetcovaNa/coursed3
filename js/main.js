@@ -97,7 +97,8 @@ function course_module() {
     var benchmark_data_editor;
     var code_area_js;
     var code_area_html = '<!DOCTYPE html>\n<html>\n<head lang="en">\n    <meta charset="UTF-8">' +
-        '\n    <title>coursed3 iframe</title>\n<style>body {font-family: "Verdana", sans-serif;font-size: 14px;}</style></head>\n<body>\n    <script src="js/d3.min.js"></script>\n<script src="js/d3plus.js"></script>\n</body>\n</html>';
+        '\n    <title>coursed3 iframe</title>\n<style>body {font-family: "Verdana", sans-serif;font-size: 14px;}</style></head>' +
+        '\n<body>\n    <script src="js/d3.min.js"></script>\n<script src="js/d3plus.js"></script>\n</body>\n</html>';
     var iframe_content;
     var iframe;
     var iframe_pattern;
@@ -116,10 +117,18 @@ function course_module() {
         line.append('line')
             .attr('stroke', '#000080')
             .style('stroke-width', 20)
-            .attr('x1', function (d) { return d.x_1 })
-            .attr('x2', function (d) { return d.x_2 })
-            .attr('y1', function (d) { return d.y_1 })
-            .attr('y2', function (d) { return d.y_2 });
+            .attr('x1', function (d) {
+                return d.x_1
+            })
+            .attr('x2', function (d) {
+                return d.x_2
+            })
+            .attr('y1', function (d) {
+                return d.y_1
+            })
+            .attr('y2', function (d) {
+                return d.y_2
+            });
         var circle = svg.selectAll('.circle')
             .data(nodes).enter()
             .append('g')
@@ -128,8 +137,12 @@ function course_module() {
             .attr('r', '60px')
             .attr('fill', '#fafbff')
             .attr('stroke', '#000080')
-            .attr('cx', function(d) { return d.x; })
-            .attr('cy', function(d) { return d.y; });
+            .attr('cx', function (d) {
+                return d.x;
+            })
+            .attr('cy', function (d) {
+                return d.y;
+            });
     }
 
     function make_task_2() {
@@ -151,17 +164,29 @@ function course_module() {
             .attr('class', 'line')
             .attr('stroke', '#000080')
             .style('stroke-width', 2)
-            .attr('x1', function (d) { return nodes[get_key(nodes, d.source)].x; })
-            .attr('x2', function (d) { return nodes[get_key(nodes, d.target)].x; })
-            .attr('y1', function (d) { return nodes[get_key(nodes, d.source)].y; })
-            .attr('y2', function (d) { return nodes[get_key(nodes, d.target)].y; });
+            .attr('x1', function (d) {
+                return nodes[get_key(nodes, d.source)].x;
+            })
+            .attr('x2', function (d) {
+                return nodes[get_key(nodes, d.target)].x;
+            })
+            .attr('y1', function (d) {
+                return nodes[get_key(nodes, d.source)].y;
+            })
+            .attr('y2', function (d) {
+                return nodes[get_key(nodes, d.target)].y;
+            });
         node.append('svg:circle')
             .attr('r', '60px')
             .attr('fill', '#fafbff')
             .attr('stroke', '#000080')
             .attr('stroke', '#000080')
-            .attr('cx', function (d) { return d.x; })
-            .attr('cy', function (d) { return d.y; });
+            .attr('cx', function (d) {
+                return d.x;
+            })
+            .attr('cy', function (d) {
+                return d.y;
+            });
     }
 
     function make_task_3() {
@@ -181,17 +206,31 @@ function course_module() {
         link.append('line')
             .attr('stroke', '#000080')
             .style('stroke-width', 2)
-            .attr('x1', function (d) { return d.x_1 })
-            .attr('x2', function (d) { return d.x_2 })
-            .attr('y1', function (d) { return d.y_1 })
-            .attr('y2', function (d) { return d.y_2 });
+            .attr('x1', function (d) {
+                return d.x_1
+            })
+            .attr('x2', function (d) {
+                return d.x_2
+            })
+            .attr('y1', function (d) {
+                return d.y_1
+            })
+            .attr('y2', function (d) {
+                return d.y_2
+            });
         link.append('svg:circle')
             .attr('r', 40)
             .attr('fill', 'transparent')
-            .attr('cx', function (d) { return (d.x_1); })
-            .attr('cy', function (d) { return (d.y_1+(d.y_2- d.y_1)/2); });
+            .attr('cx', function (d) {
+                return (d.x_1);
+            })
+            .attr('cy', function (d) {
+                return (d.y_1 + (d.y_2 - d.y_1) / 2);
+            });
         link.append('text')
-            .text(function (d) { return d.text; })
+            .text(function (d) {
+                return d.text;
+            })
             .each(function (d) {
                 d3plus.textwrap()
                     .container(d3.select(this))
@@ -202,8 +241,12 @@ function course_module() {
             .attr('r', '60px')
             .attr('fill', '#fafbff')
             .attr('stroke', '#000080')
-            .attr('cx', function(d) { return d.x; })
-            .attr('cy', function(d) { return d.y; });
+            .attr('cx', function (d) {
+                return d.x;
+            })
+            .attr('cy', function (d) {
+                return d.y;
+            });
         node.append('text')
             .text(function (d) {
                 return d.text;
@@ -231,46 +274,68 @@ function course_module() {
             .enter()
             .append('g')
             .attr('class', 'node')
-            .each(function(d){
+            .each(function (d) {
                 d3.select(this)
                     .append('svg:circle')
                     .attr('r', '60px')
                     .attr('fill', '#fafbff')
                     .attr('stroke', '#000080')
-                    .attr('cx', function (d) { return d.x; })
-                    .attr('cy', function (d) { return d.y; });
+                    .attr('cx', function (d) {
+                        return d.x;
+                    })
+                    .attr('cy', function (d) {
+                        return d.y;
+                    });
                 d3.select(this).append('text')
-                    .text(function (d) { return d.text; })
+                    .text(function (d) {
+                        return d.text;
+                    })
                     .each(function (d) {
-                        if(d.img){ d3.select(this).attr('y', '480'); }
+                        if (d.img) {
+                            d3.select(this).attr('y', '480');
+                        }
                         d3plus.textwrap()
                             .container(d3.select(this))
                             .valign('middle')
                             .draw();
                     });
-                if(d.img){ d3.select(this).append("svg:image")
-                    .attr('x',d.x-40)
-                    .attr('y',d.y-40)
-                    .attr('width', 80)
-                    .attr('height', 80).attr("xlink:href", d.img);}
+                if (d.img) {
+                    d3.select(this).append("svg:image")
+                        .attr('x', d.x - 40)
+                        .attr('y', d.y - 40)
+                        .attr('width', 80)
+                        .attr('height', 80).attr("xlink:href", d.img);
+                }
             });
         link.append('line')
             .attr('class', 'line')
             .attr('stroke', '#000080')
             .style('stroke-width', 2)
-            .attr('x1', function (d) { return nodes[get_key(nodes, d.source)].x; })
-            .attr('x2', function (d) { return nodes[get_key(nodes, d.target)].x; })
-            .attr('y1', function (d) { return nodes[get_key(nodes, d.source)].y; })
-            .attr('y2', function (d) { return nodes[get_key(nodes, d.target)].y; });
+            .attr('x1', function (d) {
+                return nodes[get_key(nodes, d.source)].x;
+            })
+            .attr('x2', function (d) {
+                return nodes[get_key(nodes, d.target)].x;
+            })
+            .attr('y1', function (d) {
+                return nodes[get_key(nodes, d.source)].y;
+            })
+            .attr('y2', function (d) {
+                return nodes[get_key(nodes, d.target)].y;
+            });
         link.append('svg:circle')
             .attr('r', 40)
             .attr('fill', 'transparent')
-            .attr('cx', function (d) { return (nodes[get_key(nodes, d.target)].x); })
+            .attr('cx', function (d) {
+                return (nodes[get_key(nodes, d.target)].x);
+            })
             .attr('cy', function (d) {
-                return (nodes[get_key(nodes, d.source)].y+Math.abs(nodes[get_key(nodes, d.source)].y-nodes[get_key(nodes, d.target)].y)/2);
+                return (nodes[get_key(nodes, d.source)].y + Math.abs(nodes[get_key(nodes, d.source)].y - nodes[get_key(nodes, d.target)].y) / 2);
             });
         link.append('text')
-            .text(function (d) { return d.text; })
+            .text(function (d) {
+                return d.text;
+            })
             .each(function (d) {
                 d3plus.textwrap()
                     .container(d3.select(this))
@@ -321,15 +386,18 @@ function course_module() {
     function check(image_1, image_2) {
         resemble(image_1).compareTo(image_2).onComplete(function (data) {
             var true_percentage = 100 - data.misMatchPercentage;
-            if (true_percentage !== 100){
+            if (true_percentage !== 100) {
                 console.log(data.getImageDataUrl());
             }
             if (true_percentage >= 98) {
                 $(".control-check-indicator").html("ок: " + true_percentage + "%").css("display", "inline-block");
                 variants_data[variant].checked.is_ok = true;
                 variants_data[variant].checked.true_percentage = true_percentage;
+                if (variant < 4) {
+                    $(".navigation-btn-next").removeClass("not-active");
+                }
             } else {
-                $(".control-check-indicator").html("незачёт").css("display", "inline-block");
+                $(".control-check-indicator").html("незачёт: " + true_percentage + "%").css("display", "inline-block");
                 variants_data[variant].checked.is_ok = false;
                 variants_data[variant].checked.true_percentage = true_percentage;
             }
@@ -387,10 +455,10 @@ function course_module() {
         iframe.body.innerHTML = "";
     }
 
-    function write_js_into_frame(iframe, js_code, id){
+    function write_js_into_frame(iframe, js_code, id) {
         js_code = js_code.toString();
         for (var i = 0; i < img_src.length; i++) {
-            js_code = js_code.replace(new RegExp(img_src[i][0], "g"), function(){
+            js_code = js_code.replace(new RegExp(img_src[i][0], "g"), function () {
                 return img_src[i][1];
             });
         }
@@ -443,27 +511,29 @@ function course_module() {
                     $(".navigation-btn-prev").addClass("not-active");
                 }
             }
-            if (variant < 4) {
+            if ((variant < 4) && (variants_data[(variant)].checked.is_ok)) {
                 $(".navigation-btn-next").removeClass("not-active");
             }
         });
         $(".navigation-btn-next").click(function () {
-            if (variant < 4) {
-                variant = increase_task_number(variant);
-                if (variant === 4) {
-                    $(".navigation-btn-next").addClass("not-active");
+            if (!$(this).hasClass("not-active")) {
+                if (variant < 4) {
+                    variant = increase_task_number(variant);
+                    if ((variant === 4) || ((variant < 4) && (!variants_data[variant].checked.is_ok))) {
+                        $(".navigation-btn-next").addClass("not-active");
+                    }
                 }
-            }
-            if (variant > 1) {
-                $(".navigation-btn-prev").removeClass("not-active");
+                if (variant > 1) {
+                    $(".navigation-btn-prev").removeClass("not-active");
+                }
             }
         });
         save_task_code();
         $(".control-check-btn").click(function () {
             var iframe_without_scripts = $(iframe_content.body).clone().find("script").remove().end().html();
             var pattern_without_scripts = $(iframe_pattern_content.body).clone().find("script").remove().end().html();
-            rasterizeHTML.drawHTML(iframe_without_scripts).then(function(result1) {
-                rasterizeHTML.drawHTML(pattern_without_scripts).then(function(result2) {
+            rasterizeHTML.drawHTML(iframe_without_scripts).then(function (result1) {
+                rasterizeHTML.drawHTML(pattern_without_scripts).then(function (result2) {
                     check(result1.image.src, result2.image.src);
                 });
             });
