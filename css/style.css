@@ -5,6 +5,7 @@ body, html {
 
 body {
     background: repeat url('../img/polka_dot_background.png');
+    font-family: "Verdana", sans-serif;
 }
 
 .main-positioner {
@@ -22,7 +23,7 @@ body {
 .title {
     display: inline-block;
     color: #000080;
-    font-size: 26px;
+    font-size: 22px;
 }
 
 .btn.help-theory-show {
@@ -236,7 +237,7 @@ body {
 
 .navigation-number {
     position: absolute;
-    top: 30px;
+    top: 40px;
     right: 0;
     color: #000080;
     font-size: 20px;

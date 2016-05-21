@@ -8,14 +8,14 @@ function course_module() {
 
     var variants_data = {
         1: {
-            benchmark_data: "var circles = [\n    {\n        name: 'circle_1', \n        x: 250, \n        y: 150\n    }\n];" +
-            "\nvar lines = [\n    {\n        name: 'line_1', \n        x_1: 100, \n        y_1: 240, \n        x_2: 400, \n        y_2: 240\n    }\n];",
-            task_text: "Нарисуйте линию и круг. Цвет заливки круга - #fafbff, цвет обводки круга - #000080, цвет линии - #000080.",
+            benchmark_data: "var nodes = [\n    {\n        name: 'circle_1', \n        x: 250, \n        y: 150\n    }\n];" +
+            "\nvar links = [\n    {\n        name: 'line_1', \n        x_1: 100, \n        y_1: 240, \n        x_2: 400, \n        y_2: 240\n    }\n];",
+            task_text: "Нарисуйте линию и круг. Цвет заливки круга - #fafbff, цвет обводки круга и цвет линии - #000080.",
             decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 570);" +
-            "var line = svg.selectAll('.line').data(lines).enter().append('g').attr('class', 'line');" +
+            "var line = svg.selectAll('.line').data(links).enter().append('g').attr('class', 'line');" +
             "line.append('line').attr('stroke', '#000080').style('stroke-width', 20).attr('x1', function (d) {return d.x_1})" +
             ".attr('x2', function (d) {return d.x_2}).attr('y1', function (d) {return d.y_1}).attr('y2', function (d) {return d.y_2});" +
-            "var circle = svg.selectAll('.circle').data(circles).enter().append('g').attr('class', 'circle');" +
+            "var circle = svg.selectAll('.circle').data(nodes).enter().append('g').attr('class', 'circle');" +
             "circle.append('svg:circle').attr('r', '60px').attr('fill', '#fafbff').attr('stroke', '#000080')." +
             "attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });",
             user_code: "//Располагайте здесь JavaScript-код",
@@ -31,7 +31,7 @@ function course_module() {
             "\nvar links = [\n    {\n        name: 'link_1',\n        source: 'node_1', \n        target: 'node_2', " +
             "\n        x: 150, \n        y: 200,\n    }, \n    {\n        name: 'link_2',\n        source: 'node_1'," +
             " \n        target: 'node_3', \n        x: 325, \n        y: 200,\n    }\n];",
-            task_text: "Соедините рёбрами вершины. Цвет заливки вершин - #fafbff, цвет обводки вершин - #000080, цвет рёбер - #000080.",
+            task_text: "Соедините рёбрами вершины. Цвет заливки вершин - #fafbff, цвет обводки вершин и цвет рёбер - #000080.",
             decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 570);" +
             "var link = svg.selectAll('.link').data(links).enter().append('g').attr('class', 'link');" +
             "var node = svg.selectAll('.node').data(nodes).enter().append('g').attr('class', 'node');" +
@@ -50,7 +50,7 @@ function course_module() {
         3: {
             benchmark_data: "var nodes = [\n    {\n        name: 'test_question_1', \n        x: 250, \n        y: 100, \n        text: 'Здесь будет вопрос.'\n    }\n]" +
             "\nvar links = [\n    {\n        name: 'link_1', \n        x_1: 225, \n        y_1: 450, \n        x_2: 275, \n        y_2: 250,\n        text: 'А здесь ответ на вопрос.'\n    }\n];",
-            task_text: "Добавим вершинам и рёбрам текст. Цвет заливки вершины - #fafbff, цвет обводки вершины - #000080, цвет рeбра - #000080.",
+            task_text: "Добавим вершинам и рёбрам текст. Цвет заливки вершины - #fafbff, цвет обводки вершины и цвет рeбра - #000080.",
             decision_js_function: " var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 570);" +
             "var link = svg.selectAll('.line').data(links).enter().append('g').attr('class', 'line');" +
             "var node = svg.selectAll('.nodes').data(nodes).enter().append('g').attr('class', 'circle');" +
@@ -84,7 +84,7 @@ function course_module() {
             "source: 'test_question_2',\n            target: 'result_2',\n            text: 'Прогулка в горах'\n        },\n        {\n            " +
             "source: 'test_question_3',\n            target: 'result_3',\n            text: 'Мясная котлета'\n        },\n        {\n            " +
             "source: 'test_question_3',\n            target: 'result_4',\n            text: 'Овощной салат'\n        }\n    ];",
-            task_text: "Постройте диаграмму. Цвет заливки вершин - #fafbff, цвет обводки вершин - #000080, цвет рёбер - #000080.",
+            task_text: "Постройте диаграмму. Цвет заливки вершин - #fafbff, цвет обводки вершин и цвет рёбер - #000080.",
             decision_js_function: "var svg = d3.select('body').append('svg').attr('width', 500).attr('height', 570);var link = svg.selectAll('.link').data(links).enter().append('g').attr('class', 'link');var node = svg.selectAll('.node').data(nodes).enter().append('g').attr('class', 'node').each(function(d){d3.select(this).append('svg:circle').attr('r', '60px').attr('fill', '#fafbff').attr('stroke', '#000080').attr('cx', function (d) { return d.x; }).attr('cy', function (d) { return d.y; });d3.select(this).append('text').text(function (d) { return d.text; }).each(function (d) {if(d.img){ d3.select(this).attr('y', '480'); }d3plus.textwrap().container(d3.select(this)).valign('middle').draw();});if(d.img){ d3.select(this).append('svg:image').attr('x',d.x-40).attr('y',d.y-40).attr('width', 80).attr('height', 80).attr('xlink:href', d.img);}});link.append('line').attr('class', 'line').attr('stroke', '#000080').style('stroke-width', 2).attr('x1', function (d) { return nodes[get_key(nodes, d.source)].x; }).attr('x2', function (d) { return nodes[get_key(nodes, d.target)].x; }).attr('y1', function (d) { return nodes[get_key(nodes, d.source)].y; }).attr('y2', function (d) { return nodes[get_key(nodes, d.target)].y; });link.append('svg:circle').attr('r', 40).attr('fill', 'transparent').attr('cx', function (d) { return (nodes[get_key(nodes, d.target)].x); }).attr('cy', function (d) {return (nodes[get_key(nodes, d.source)].y+Math.abs(nodes[get_key(nodes, d.source)].y-nodes[get_key(nodes, d.target)].y)/2);});link.append('text').text(function (d) { return d.text; }).each(function (d) {d3plus.textwrap().container(d3.select(this)).valign('middle').draw();});",
             user_code: "//Располагайте здесь JavaScript-код",
             checked: {
@@ -97,19 +97,19 @@ function course_module() {
     var benchmark_data_editor;
     var code_area_js;
     var code_area_html = '<!DOCTYPE html>\n<html>\n<head lang="en">\n    <meta charset="UTF-8">' +
-        '\n    <title>coursed3</title>\n</head>\n<body>\n    <script src="js/d3.min.js"></script>\n<script src="js/d3plus.js"></script>\n</body>\n</html>';
+        '\n    <title>coursed3 iframe</title>\n<style>body {font-family: "Verdana", sans-serif;font-size: 14px;}</style></head>\n<body>\n    <script src="js/d3.min.js"></script>\n<script src="js/d3plus.js"></script>\n</body>\n</html>';
     var iframe_content;
     var iframe;
     var iframe_pattern;
     var iframe_pattern_content;
 
-    function task_1() {
+    function make_task_1() {
         var svg = d3.select('body')
             .append('svg')
             .attr('width', 500)
             .attr('height', 570);
         var line = svg.selectAll('.line')
-            .data(lines)
+            .data(links)
             .enter()
             .append('g')
             .attr('class', 'line');
@@ -121,7 +121,7 @@ function course_module() {
             .attr('y1', function (d) { return d.y_1 })
             .attr('y2', function (d) { return d.y_2 });
         var circle = svg.selectAll('.circle')
-            .data(circles).enter()
+            .data(nodes).enter()
             .append('g')
             .attr('class', 'circle');
         circle.append('svg:circle')
@@ -132,7 +132,7 @@ function course_module() {
             .attr('cy', function(d) { return d.y; });
     }
 
-    function task_2() {
+    function make_task_2() {
         var svg = d3.select('body')
             .append('svg')
             .attr('width', 500)
@@ -164,7 +164,7 @@ function course_module() {
             .attr('cy', function (d) { return d.y; });
     }
 
-    function task_3() {
+    function make_task_3() {
         var svg = d3.select('body')
             .append('svg')
             .attr('width', 500)
@@ -216,7 +216,7 @@ function course_module() {
             });
     }
 
-    function task_4() {
+    function make_task_4() {
         var svg = d3.select('body')
             .append('svg')
             .attr('width', 500)
@@ -396,7 +396,7 @@ function course_module() {
         }
         var script = document.createElement('script');
         script.id = id;
-        script.text = js_code;
+        script.text = "\ntry { \n" + js_code + "\n} catch (err) {};";
         iframe.body.appendChild(script);
     }
 
