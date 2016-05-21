@@ -142,6 +142,7 @@ body {
 
 .workspace-result, .workspace-pattern {
     color: #000080;
+    position: relative;
 }
 
 .block-control {
@@ -238,4 +239,22 @@ body {
     right: 0;
     color: #000080;
     font-size: 20px;
+}
+
+.btn.btn-show-difference {
+    display: none;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border: 1px solid rgba(0, 0, 128, 0.5);
+    background-image: linear-gradient(to bottom, rgba(107, 104, 212, 0.5), rgba(0, 0, 128, 0.5));
+}
+
+.btn.btn-show-difference:hover {
+    background: #000080;
+    opacity: 0.5;
+}
+
+.last-difference {
+    display: none;
 }

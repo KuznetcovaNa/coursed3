@@ -386,11 +386,14 @@ function course_module() {
     function check(image_1, image_2) {
         resemble(image_1).compareTo(image_2).onComplete(function (data) {
             var true_percentage = 100 - data.misMatchPercentage;
-            if (true_percentage !== 100) {
-                console.log(data.getImageDataUrl());
+            if (true_percentage < 100) {
+                $(".btn-show-difference").css("display", "block");
+                $(".last-difference").html("<img src=" + data.getImageDataUrl() + ">");
+            } else {
+                restart_difference_btn();
             }
             if (true_percentage >= 98) {
-                $(".control-check-indicator").html("ок: " + true_percentage + "%").css("display", "inline-block");
+                $(".control-check-indicator").html("зачёт: " + true_percentage + "%").css("display", "inline-block");
                 variants_data[variant].checked.is_ok = true;
                 variants_data[variant].checked.true_percentage = true_percentage;
                 if (variant < 4) {
@@ -398,8 +401,10 @@ function course_module() {
                 }
             } else {
                 $(".control-check-indicator").html("незачёт: " + true_percentage + "%").css("display", "inline-block");
-                variants_data[variant].checked.is_ok = false;
-                variants_data[variant].checked.true_percentage = true_percentage;
+                if (! variants_data[variant].checked.is_ok === true) {
+                    variants_data[variant].checked.is_ok = false;
+                    variants_data[variant].checked.true_percentage = true_percentage;
+                }
             }
             return data;
         });
@@ -421,7 +426,14 @@ function course_module() {
         return variant_number;
     }
 
+    function restart_difference_btn (){
+        $(".btn-show-difference").css("display", "none").val("В чём различия?").addClass("show-iframe").removeClass("show-difference");
+        $(".last-difference").css("display", "none");
+        $(".pattern-iframe").css("display", "block");
+    }
+
     function change_task(variant_number) {
+        restart_difference_btn();
         $(".navigation-number")[0].innerHTML = variant_number + "/4";
         $(".control-text-task")[0].innerHTML = variants_data[variant_number].task_text;
         clear_iframe_body(iframe_content);
@@ -537,7 +549,20 @@ function course_module() {
                     check(result1.image.src, result2.image.src);
                 });
             });
-        })
+        });
+        $(".btn-show-difference").click(function(){
+            if ($(".btn-show-difference").hasClass("show-iframe")) {
+                $(".show-iframe").addClass("show-difference").removeClass("show-iframe");
+                $(".last-difference").css("display", "block");
+                $(".pattern-iframe").css("display", "none");
+                $(this).val("Открыть шаблон");
+            } else {
+                $(".show-difference").addClass("show-iframe").removeClass("show-difference");
+                $(".pattern-iframe").css("display", "block");
+                $(".last-difference").css("display", "none");
+                $(this).val("В чём различия?");
+            }
+        });
     }
 
     init();
