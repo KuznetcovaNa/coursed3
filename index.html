@@ -10,12 +10,112 @@
 <body>
 <div class="main-positioner">
     <div class="block-header">
-        <div class="title">Освоение d3.js для построения диаграмм</div>
+        <div class="title">Освоение D3.js для построения диаграмм</div>
         <input class="btn help-theory-show" type="button" value="Теория">
         <div class="help-theory-article">
-            <a class="help-docs" href="https://github.com/mbostock/d3/wiki" target="_blank">Документация d3.js</a>
-            Теория <br>
-            <input class="btn help-theory-hide" type="button" value="Хочу заданий!">
+            <a class="help-docs" href="https://github.com/mbostock/d3/wiki" target="_blank">Документация D3.js</a>
+            <div class="help-main-content">
+                <div class="help-paragraph"><h3>Введение</h3></div>
+                <div class="help-paragraph">D3.js - это JavaScript-библиотека для визуализации данных. Она предоставляет
+                    удобные утилиты для обработки и загрузки массивов данных и создания DOM-элементов.
+                </div>
+                <div class="help-paragraph">D3 реализует подход, называемый текучим интерфейсом. При чтении кода он
+                    выглядит как
+                    цепочка методов. Каждый метод вызывается на объекте,
+                    который вернул предыдущий метод. Чтобы код было удобно читать, каждый вызов принято располагать на
+                    отдельной строчке.
+                </div>
+                <div class="help-paragraph">В ходе этого курса мы будем учиться строить диаграммы-тесты, где на каждый
+                    вопрос может быть дано несколько вариантов ответа.
+                    Задания постепенно увеличиваются по сложности, в каждом из них есть набор исходных данных (верхнее
+                    окно редактора), который необходимо использовать при решении.
+                    На заключительном четвёртом шаге диаграмма будет построена целиком. При верном выполнении этапа
+                    открывается для прохождения
+                    следующее задание. Текст программ сохраняется при переходе от одного задания к другому.
+                </div>
+                <div class="help-paragraph"><h3>Задание 1</h3></div>
+                <div class="help-paragraph">В D3, как и в других JS-библиотеках, работающих с DOM-элементами,
+                    взаимодействие с документом начинается с поиска
+                    элементов в документе и создания выборки — обёртки набора элементов. Она даёт доступ к методам
+                    библиотеки для модификации выбранных элементов.
+                    Выборка в D3 создается с помощью методов <span class="help-theory-word">d3.select()</span> и <span
+                            class="help-theory-word">d3.selectAll()</span>.
+                    Полученную выборку используют для работы с элементами и для создания выборки из потомков.
+                </div>
+                <div class="help-paragraph">Методы <span class="help-theory-word">selection.style()</span>, <span
+                        class="help-theory-word">selection.attr()</span> задают или возвращают CSS-свойства элемента,
+                    его аттрибуты;
+                    <span class="help-theory-word">selection.append()</span> добавляет потомка к каждому элементу
+                    текущей выборки. Обратите внимание, что мы пользуемся сохранённой в переменную выборкой: вызовы
+                    методов <span class="help-theory-word">attr</span>, <span class="help-theory-word">style</span>,
+                    <span class="help-theory-word">text</span> и др. возвращают выборку, на которой они вызваны, что
+                    типично для текучих интерфейсов.
+                </div>
+                <div class="help-paragraph">В качестве аргументов можно передавать функции,
+                    в этом случае они будет вызваны с параметрами <span class="help-theory-word">d</span>, <span
+                            class="help-theory-word">index</span>, а контекстом (объектом <span
+                            class="help-theory-word">this</span>) будет элемент, DOM-узел. Параметр <span
+                            class="help-theory-word">d</span> - заданный для элемента набор данных, а
+                    <span class="help-theory-word">index</span> — номер элемента в выборке.
+                </div>
+                <div class="help-paragraph clearfix">
+                    <img src="img/bunch.png" class="help-picture-left">
+                    Для создания группы элементов используются связки. Идеология связок такова: вместо того, чтобы
+                    указывать D3, как сделать что-то,
+                    сообщите, что именно вам нужно. Вам нужны определённые элементы, связанные с определёнными данными.
+                    Данные, связанные с уже существующими элементами, образуют выборку <span class="help-theory-word">update</span>
+                    (пересечение кругов). Оставшиеся данные образуют выборку <span class="help-theory-word">enter</span>,
+                    которая представляет недостающие элементы. Соответственно,
+                    элементы без данных образуют выборку <span class="help-theory-word">exit</span>, предназначенную для
+                    удаления. Мыслить связками — значит объявить связь между выборкой
+                    элементов и данными, а затем управлять ей с помощью состояний <span
+                        class="help-theory-word">enter</span>, <span class="help-theory-word">update</span> и <span
+                        class="help-theory-word">exit</span>.
+                </div>
+                <div class="help-paragraph clearfix">
+                    <img src="img/example_1" class="help-picture-right">
+                    Чтобы лучше усвоить, как мыслить связками, рассмотрим пример.
+                    Пусть svg ссылается на выборку из одного созданного элемента.
+                    Здесь links — это массив JSON-объектов.
+                    1) svg.selectAll(".link") возвращает пустую выборку, т.к. SVG-контейнер был пуст. Родительский узел
+                    для этой выборки — элемент SVG.<br>
+                    2) Пустая выборка связывается с массивом данных, порождая три выборки: enter, update и exit.<br>
+                    3) Метод selection.data по умолчанию возвращает выборку update; для обращения к выборкам enter и
+                    exit используются методы selection.enter и selection.exit соотвественно.<br>
+                    4) Недостающие элементы добавляются в родительский узел вызовом selection.append на выборке enter.
+                    Так в SVG-контейнере появляется по узлу g для каждого элемента данных.
+                </div>
+                <div class="help-paragraph"><h3>Задание 2</h3></div>
+                <div class="help-paragraph clearfix">
+                    <img src="img/example_2" class="help-picture-right">На этом шаге необходимо связать вершины и рёбра.
+                    В массиве данных не указываются координаты рёбер, их нужно получить из массива вершин.
+                    Для этого можно написать свою функцию, возвращающую нужный элемент массива по заданному имени, или
+                    использовать готовую <span class="help-theory-word">get_key()</span>.
+                    Она вызыается с двумя аргументами: первый - массив для поиска, второй - имя вершины.
+                </div>
+                <div class="help-paragraph"><h3>Задание 3</h3></div>
+                <div class="help-paragraph clearfix">
+                    <img src="img/example_3" class="help-picture-right"> Для добавления текста используется svg -
+                    элемент <span class="help-theory-word">text</span>. Метод <span class="help-theory-word">selection.text()</span>
+                    позволяет внести текстовое содержимое. Метод <span class="help-theory-word">selection.each()</span>
+                    вызывает переданную функцию для каждого элемента в выборке. Кроме добавления текста его необходимо
+                    выровнять по центру и разделить на несколько строк. В этом нам поможет библиотека
+                    <span class="help-theory-word">D3plus</span>. Для этого контейнер с текстом необходимо располагать
+                    после элементов - кругов или элементов - прямоугольников. Библиотека автоматически обернет текст в
+                    форму круга или прямоугольника.
+                    Метод <span class="help-theory-word">.container()</span> говорит, содержимое какого элемента
+                    необходимо обернуть. Метод <span class="help-theory-word">.valign()</span> выравнивает содержимое.
+                    Метод <span class="help-theory-word">.draw()</span> оборачивает текст в заданном контейнере.
+                </div>
+                <div class="help-paragraph"><h3>Задание 4</h3></div>
+                <div class="help-paragraph clearfix">
+                    <img src="img/example_4" class="help-picture-right">
+                    Для добавления изображения используется svg - элемент <span class="help-theory-word">image</span>.
+                    Необходимо проверить, имеется ли нужное поле 'img' в связанных данных при добалении элемента -
+                    изображения. Кроме этого, если имеется изображение, следует сместить текст вершины.
+                </div>
+            </div>
+            <input class="btn help-theory-hide" type="button" value="Хочу тренироваться">
         </div>
     </div>
     <div class="block-workspace">
@@ -30,7 +130,9 @@
                 <textarea id="js-area"></textarea>
             </div>
         </div>
-        <div class="workspace-result"><iframe id="result-iframe" src="javascript: ''"></iframe></div>
+        <div class="workspace-result">
+            <iframe id="result-iframe" src="javascript: ''"></iframe>
+        </div>
         <div class="workspace-pattern">
             <input class="btn btn-show-difference show-iframe" type="button" value="В чём различия?">
             <div class="last-difference"></div>
@@ -55,7 +157,6 @@
 <script src="js/jquery.js"></script>
 <script src="js/codemirror.js"></script>
 <script src="js/active-line.js"></script>
-<script src="js/html_mixed.js"></script>
 <script src="js/xml.js"></script>
 <script src="js/closebrackets.js"></script>
 <script src="js/matchbrackets.js"></script>
