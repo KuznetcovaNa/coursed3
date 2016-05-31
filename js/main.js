@@ -111,7 +111,7 @@ function course_module() {
     var benchmark_data_editor;
     var code_area_js;
     var code_area_html = '<!DOCTYPE html>\n<html>\n<head lang="en">\n    <meta charset="UTF-8">' +
-        '\n    <title>coursed3 iframe</title>\n<style>body {font-family: "Verdana", sans-serif;font-size: 14px;}</style></head>' +
+        '\n    <title>coursed3 iframe</title>\n<style>body {font-size: 14px;}</style></head>' +
         '\n<body>\n    <script src="js/d3.min.js"></script>\n<script src="js/d3plus.js"></script>\n</body>\n</html>';
     var iframe_content;
     var iframe;
